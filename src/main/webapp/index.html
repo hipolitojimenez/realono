@@ -77,26 +77,37 @@
 		</style>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script type="text/javascript">
+			var currentResult;
+			var iContador = 0;
+			var tContador = 4;
 			$(document).ready(function() {
-				//TODO load from server
-				$('#ajaxloader').fadeOut(2000);
-				$('#item').fadeIn(2000);
+				$.getJSON('news.json', function (data) {
+					iContador++;
+					$('#titulo').text(data.titulo);
+					$('#descripcion').text(data.descripcion);
+					$('#contador').text(iContador + ' de ' + tContador);
+					currentResult = data.resultado;
+					//TODO load from server
+					$('#ajaxloader').fadeOut(2000);
+					$('#item').fadeIn(2000);
+				});
 			});
 		</script>
 	</head>
 	<body>
 		<br/>
 		<h1>Real o Inventado</h1>
-		<br/>
 		<h2>¿La realidad siempre supera a la ficción?</h2>
 		<div class="container">
 			<div>¿Eres capaz de diferenciar una noticia real de una noticia inventada?</div>
 			<br/>
 			<img id="ajaxloader" alt="loader" src="images/ajax-loader.gif" />
 			<div id="item">
-				<div><b><i>título</i></b></div>
+				<div id="contador"></div>
+				<hr/>
+				<div><b><i id="titulo"></i></b></div>
 				<br/>
-				<div id="descripcion">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</div>
+				<div id="descripcion"></div>
 				<br/>
 				<div><button class="tbutton">Verdadera</button></div>
 				<div>o</div>
