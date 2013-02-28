@@ -7,12 +7,14 @@
 			h1, h2 {
 				text-align: center;
 			}
-			#main {
+			.container {
 				width: 500px;
 				margin: 0 auto;
 				text-align: center;
+				position: relative;
 			}
 			#item {
+				width: 500px;
 				border: 5px groove blue;
 				padding: 15px;
 				-webkit-border-radius: 25px;
@@ -21,6 +23,13 @@
 				-webkit-box-shadow: 10px 10px 10px;
 				-moz-box-shadow: 10px 10px 10px;
 				box-shadow: 10px 10px 10px;
+				display: none;
+				position: absolute;
+			}
+			#ajaxloader {
+				position: absolute;
+				left: 200px;
+				top: 100px;
 			}
 			button {
 				width: 120px;
@@ -67,16 +76,23 @@
 			}
 		</style>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//TODO load from server
+				$('#ajaxloader').fadeOut(2000);
+				$('#item').fadeIn(2000);
+			});
+		</script>
 	</head>
 	<body>
 		<br/>
 		<h1>Real o Inventado</h1>
 		<br/>
 		<h2>¿La realidad siempre supera a la ficción?</h2>
-		<div id="main">
-			<img id="ajaxloader" alt="loader" src="images/ajax-loader.gif" />
+		<div class="container">
 			<div>¿Eres capaz de diferenciar una noticia real de una noticia inventada?</div>
 			<br/>
+			<img id="ajaxloader" alt="loader" src="images/ajax-loader.gif" />
 			<div id="item">
 				<div><b><i>título</i></b></div>
 				<br/>
