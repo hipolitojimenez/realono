@@ -4,4 +4,14 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>NewsJsonServlet</display-name>
+    <servlet-name>NewsJsonServlet</servlet-name>
+    <servlet-class>com.nioos.realono.servlets.NewsJsonServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewsJsonServlet</servlet-name>
+    <url-pattern>/news.json</url-pattern>
+  </servlet-mapping>
 </web-app>
