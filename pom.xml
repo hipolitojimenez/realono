@@ -25,6 +25,7 @@
   				<effort>Max</effort>
   				<threshold>Low</threshold>
   				<xmlOutput>true</xmlOutput>
+  				<excludeFilterFile>findbugs/FindBugsFilter.xml</excludeFilterFile>
   			</configuration>
   			<executions>
   				<execution>
@@ -54,6 +55,20 @@
   				</execution>
   			</executions>
   		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-pmd-plugin</artifactId>
+  			<version>3.0</version>
+  			<executions>
+  				<execution>
+  					<phase>test</phase>
+  					<goals>
+  						<goal>cpd</goal>
+  						<goal>pmd</goal>
+  					</goals>
+  				</execution>
+  			</executions>
+  		</plugin>
   	</plugins>
   </build>
   <reporting>
@@ -75,6 +90,11 @@
   			<configuration>
   				<enableRulesSummary>false</enableRulesSummary>
   			</configuration>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-pmd-plugin</artifactId>
+  			<version>3.0</version>
   		</plugin>
   	</plugins>
   </reporting>

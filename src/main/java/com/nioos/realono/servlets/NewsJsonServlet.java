@@ -22,10 +22,15 @@ public class NewsJsonServlet extends HttpServlet {
 	private static final long serialVersionUID = -5034965722025202666L;
 	
 	
+	private transient final Object obj;
+	
+	
 	/**
      * Default constructor. 
      */
     public NewsJsonServlet() {
+    	super();
+    	obj = new Object();
         // TODO Auto-generated constructor stub
     }
     
@@ -46,6 +51,7 @@ public class NewsJsonServlet extends HttpServlet {
 	protected void doGet(final HttpServletRequest request,
 				final HttpServletResponse response)
 			throws ServletException, IOException {
+		obj.toString();
 		// TODO Auto-generated method stub
 	}
 	
