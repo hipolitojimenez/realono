@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Servlet that returns a random news from the data file
+ * Servlet that returns a random news from the data file.
  */
 public class NewsJsonServlet extends HttpServlet {
 	
@@ -31,7 +31,8 @@ public class NewsJsonServlet extends HttpServlet {
     
     
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request,
+	 * HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

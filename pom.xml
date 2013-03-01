@@ -11,7 +11,7 @@
   	<dependency>
   		<groupId>javax.servlet</groupId>
   		<artifactId>javax.servlet-api</artifactId>
-  		<version>3.1-b06</version>
+  		<version>3.0.1</version>
   		<scope>provided</scope>
   	</dependency>
   </dependencies>
@@ -28,9 +28,28 @@
   			</configuration>
   			<executions>
   				<execution>
-  					<phase>package</phase>
+  					<phase>test</phase>
   					<goals>
   						<goal>check</goal>
+  					</goals>
+  				</execution>
+  			</executions>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-checkstyle-plugin</artifactId>
+  			<version>2.10</version>
+  			<configuration>
+  				<enableRulesSummary>false</enableRulesSummary>
+  				<configLocation>checkstyle/eclipse_checks.xml</configLocation>
+  				<failOnViolation>true</failOnViolation>
+  				<failsOnError>true</failsOnError>
+  			</configuration>
+  			<executions>
+  				<execution>
+  					<phase>test</phase>
+  					<goals>
+  						<goal>checkstyle</goal>
   					</goals>
   				</execution>
   			</executions>
@@ -47,6 +66,14 @@
   				<effort>Max</effort>
   				<threshold>Low</threshold>
   				<xmlOutput>true</xmlOutput>
+  			</configuration>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-checkstyle-plugin</artifactId>
+  			<version>2.10</version>
+  			<configuration>
+  				<enableRulesSummary>false</enableRulesSummary>
   			</configuration>
   		</plugin>
   	</plugins>
