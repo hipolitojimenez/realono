@@ -2,6 +2,8 @@ package com.nioos.realono;
 
 import java.io.UnsupportedEncodingException;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -33,16 +35,40 @@ public class NewsJson {
 	 * @return the byte array that contains the json string.
 	 */
 	public final byte[] getNextRandomNewsInJsonFormat() {
-		final String str = Thread.currentThread().getName();
+		final String news = getNextRandomNewsInStringFormat();
 		byte[] buffer = null; // NOPMD
 		try {
-			buffer = str.getBytes("UTF8"); // NOPMD
+			buffer = news.getBytes("UTF8"); // NOPMD
 		} catch (UnsupportedEncodingException uee) {
 			LOG.fatal("UTF8 is not supported !!!", uee);
 			throw new IllegalArgumentException("UTF8 is not supported !!!",
 				uee);
 		}
 		return buffer;
+	}
+	
+	
+	/**
+	 * Get the next random news from the data file in string format.
+	 * 
+	 * @return the string with the next random news.
+	 */
+	private String getNextRandomNewsInStringFormat() {
+		final NewsRecord newsRecord = getNextRandomNewsInRecordFormat();
+		return JSONObject.fromObject(newsRecord).toString();
+	}
+	
+	
+	/**
+	 * Get the next random news from the data file in record format.
+	 * 
+	 * @return the NewsRecord with the next random news.
+	 */
+	private NewsRecord getNextRandomNewsInRecordFormat() {
+		final NewsRecord result =
+			new NewsRecord(1, "título", "descripción", 'r');
+		// TODO read from data file
+		return result;
 	}
 	
 	

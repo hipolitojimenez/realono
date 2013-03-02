@@ -77,7 +77,7 @@
 		</style>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script type="text/javascript">
-			var currentResult;
+			var realFake;
 			var iContador = 0;
 			var tContador = 4;
 			$(document).ready(function() {
@@ -86,7 +86,7 @@
 					$('#titulo').text(data.titulo);
 					$('#descripcion').text(data.descripcion);
 					$('#contador').text('Noticia ' + iContador + ' de ' + tContador);
-					currentResult = data.resultado;
+					realFake = data.realFake;
 					//TODO load from server
 					$('#ajaxloader').fadeOut(2000);
 					$('#item').fadeIn(2000);
