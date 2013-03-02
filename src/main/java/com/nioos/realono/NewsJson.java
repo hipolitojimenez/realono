@@ -7,6 +7,9 @@ import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.nioos.realono.data.DataFile;
+import com.nioos.realono.data.NewsRecord;
+
 
 
 /**
@@ -27,6 +30,12 @@ public class NewsJson {
 	 * JSON mime content type.
 	 */
 	public static final String CONTENT_TYPE = "application/json";
+	
+	
+	/**
+	 * Data file for data access.
+	 */
+	private final transient DataFile dataFile = new DataFile();
 	
 	
 	/**
@@ -65,10 +74,7 @@ public class NewsJson {
 	 * @return the NewsRecord with the next random news.
 	 */
 	private NewsRecord getNextRandomNewsInRecordFormat() {
-		final NewsRecord result =
-			new NewsRecord(1, "título", "descripción", 'r');
-		// TODO read from data file
-		return result;
+		return dataFile.getNextRandomNews();
 	}
 	
 	
