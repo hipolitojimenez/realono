@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nioos.realono.NewsJson;
+
 
 
 /**
@@ -17,12 +19,15 @@ public class NewsJsonServlet extends HttpServlet {
 	
 	
     /**
-	 * 
+	 * Serial version UID.
 	 */
 	private static final long serialVersionUID = -5034965722025202666L;
 	
 	
-	private transient final Object obj;
+	/**
+	 * This is the real working object.
+	 */
+	private final transient NewsJson newsJson;
 	
 	
 	/**
@@ -30,8 +35,7 @@ public class NewsJsonServlet extends HttpServlet {
      */
     public NewsJsonServlet() {
     	super();
-    	obj = new Object();
-        // TODO Auto-generated constructor stub
+    	newsJson = new NewsJson();
     }
     
     
@@ -48,11 +52,13 @@ public class NewsJsonServlet extends HttpServlet {
 	 * @throws ServletException if the request for the GET could not be
 	 * handled
 	 */
-	protected void doGet(final HttpServletRequest request,
+	protected final void doGet(final HttpServletRequest request,
 				final HttpServletResponse response)
 			throws ServletException, IOException {
-		obj.toString();
-		// TODO Auto-generated method stub
+		final String contentType = NewsJson.CONTENT_TYPE;
+		response.setContentType(contentType);
+		final byte[] buffer = newsJson.getNextRandomNewsInJsonFormat();
+		response.getOutputStream().write(buffer);
 	}
 	
 	
