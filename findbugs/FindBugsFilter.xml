@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FindBugsFilter>
+<FindBugsFilter
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="http://localhost/bugcollection">
 	<Match>
 		<Class name="com.nioos.realono.servlets.NewsJsonServlet" />
 		<Bug pattern="SE_TRANSIENT_FIELD_NOT_RESTORED" />
