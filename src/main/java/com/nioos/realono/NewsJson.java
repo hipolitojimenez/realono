@@ -36,11 +36,12 @@ public class NewsJson {
 		final String str = Thread.currentThread().getName();
 		byte[] buffer = null; // NOPMD
 		try {
-			buffer = str.getBytes("UTF8");
+			buffer = str.getBytes("UTF8"); // NOPMD
 		} catch (UnsupportedEncodingException uee) {
-			LOG.fatal("This should never happen", uee);
+			LOG.fatal("UTF8 is not supported !!!", uee);
+			throw new IllegalArgumentException("UTF8 is not supported !!!",
+				uee);
 		}
-		// TODO Auto-generated method stub
 		return buffer;
 	}
 	
