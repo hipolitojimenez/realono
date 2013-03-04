@@ -10,6 +10,15 @@ package com.nioos.realono.data;
 public class NewsRecord {
 	
 	
+	public static final int TITLE_REC_LEN = 1024;
+	
+	
+	public static final int DESC_REC_LEN = 4096;
+	
+	
+	public static final int TOTAL_REC_LEN = TITLE_REC_LEN + DESC_REC_LEN + 4;
+	
+	
 	/**
 	 * Record identifier.
 	 */
@@ -19,13 +28,13 @@ public class NewsRecord {
 	/**
 	 * News title.
 	 */
-	private final String titulo;
+	private final String title;
 	
 	
 	/**
 	 * News little description.
 	 */
-	private final String descripcion;
+	private final String description;
 	
 	
 	/**
@@ -45,8 +54,8 @@ public class NewsRecord {
 	public NewsRecord(final int theId, final String theTitle,
 			final String theDesc, final char real) {
 		id = theId;
-		titulo = theTitle;
-		descripcion = theDesc;
+		title = theTitle;
+		description = theDesc;
 		realFake = real;
 	}
 	
@@ -64,8 +73,8 @@ public class NewsRecord {
 	 * Gets the news title.
 	 * @return the news title.
 	 */
-	public final String getTitulo() {
-		return titulo;
+	public final String getTitle() {
+		return title;
 	}
 	
 	
@@ -73,8 +82,8 @@ public class NewsRecord {
 	 * Gets the news description.
 	 * @return the news description.
 	 */
-	public final String getDescripcion() {
-		return descripcion;
+	public final String getDescription() {
+		return description;
 	}
 	
 	
@@ -92,10 +101,10 @@ public class NewsRecord {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((descripcion == null) ? 0 : descripcion.hashCode());
+				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		result = prime * result + realFake;
-		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
 	
@@ -109,19 +118,19 @@ public class NewsRecord {
 		if (getClass() != obj.getClass())
 			return false;
 		NewsRecord other = (NewsRecord) obj;
-		if (descripcion == null) {
-			if (other.descripcion != null)
+		if (description == null) {
+			if (other.description != null)
 				return false;
-		} else if (!descripcion.equals(other.descripcion))
+		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
 			return false;
 		if (realFake != other.realFake)
 			return false;
-		if (titulo == null) {
-			if (other.titulo != null)
+		if (title == null) {
+			if (other.title != null)
 				return false;
-		} else if (!titulo.equals(other.titulo))
+		} else if (!title.equals(other.title))
 			return false;
 		return true;
 	}

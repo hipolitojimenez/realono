@@ -27,9 +27,6 @@ public class DataFile {
 	private static final Log LOG = LogFactory.getLog(DataFile.class);
 	
 	
-	private static final long RECORD_LEN = 1; //TODO
-	
-	
 	private RandomAccessFile raf = null;
 	
 	
@@ -49,7 +46,7 @@ public class DataFile {
 		}
 		try {
 			long len = raf.length();
-			numberOfRecords = (int) (len / RECORD_LEN);
+			numberOfRecords = (int) (len / NewsRecord.TOTAL_REC_LEN);
 		} catch (IOException ioe) {
 			LOG.fatal("Cannot read data file !!!", ioe);
 			throw new IllegalStateException("Cannot read data file !!!", ioe);
