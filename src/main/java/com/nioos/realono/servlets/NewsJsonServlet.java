@@ -3,6 +3,7 @@ package com.nioos.realono.servlets;
 
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +17,9 @@ import com.nioos.realono.NewsJson;
  * Servlet that returns a random news from the data file.
  */
 public class NewsJsonServlet extends HttpServlet {
-	
-	
-    /**
+    
+    
+	/**
 	 * Serial version UID.
 	 */
 	private static final long serialVersionUID = -5034965722025202666L;
@@ -27,16 +28,22 @@ public class NewsJsonServlet extends HttpServlet {
 	/**
 	 * This is the real working object.
 	 */
-	private final transient NewsJson newsJson;
+	private transient NewsJson newsJson;
 	
 	
-	/**
-     * Default constructor. 
+    /**
+     * Servlet init.
+     * 
+     * Setup the real path for the data file.
+     * @throws ServletException on error.
      */
-    public NewsJsonServlet() {
-    	super();
-    	newsJson = new NewsJson();
-    }
+    @Override
+	public void init() throws ServletException {
+		super.init();
+		String newsDataFilePath =
+			getServletContext().getRealPath("/WEB-INF/news.data");
+    	newsJson = new NewsJson(newsDataFilePath);
+	}
     
     
 	/**
@@ -59,6 +66,13 @@ public class NewsJsonServlet extends HttpServlet {
 		response.setContentType(contentType);
 		final byte[] buffer = newsJson.getNextRandomNewsInJsonFormat();
 		response.getOutputStream().write(buffer);
+	}
+	
+	
+	@Override
+	public void destroy() {
+		super.destroy();
+		newsJson.stop();
 	}
 	
 	

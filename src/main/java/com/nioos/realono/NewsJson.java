@@ -1,5 +1,7 @@
 package com.nioos.realono;
 
+
+
 import java.io.UnsupportedEncodingException;
 
 import net.sf.json.JSONObject;
@@ -35,7 +37,17 @@ public class NewsJson {
 	/**
 	 * Data file for data access.
 	 */
-	private final transient DataFile dataFile = new DataFile();
+	private final transient DataFile dataFile;
+	
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param newsDataFilePath the real path for the data file.
+	 */
+	public NewsJson(String newsDataFilePath) {
+		dataFile = new DataFile(newsDataFilePath);
+	}
 	
 	
 	/**
@@ -75,6 +87,11 @@ public class NewsJson {
 	 */
 	private NewsRecord getNextRandomNewsInRecordFormat() {
 		return dataFile.getNextRandomNews();
+	}
+	
+	
+	public void stop() {
+		dataFile.close();
 	}
 	
 	
