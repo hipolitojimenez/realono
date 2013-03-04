@@ -39,6 +39,7 @@ public class NewsJsonTest {
 		final String actual = new String(buffer, "UTF8");
 		assertEquals("news failed", expected, actual);
 		//
+		newsJson.stop();
 		tmpFile.delete();
 	}
 	

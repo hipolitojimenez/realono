@@ -31,6 +31,7 @@ public class DataFileTest {
 		//
 		assertEquals("data file failed", expected, actual);
 		//
+		dataFile.close();
 		tmpFile.delete();
 	}
 	
