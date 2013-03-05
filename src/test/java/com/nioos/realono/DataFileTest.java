@@ -51,7 +51,7 @@ public class DataFileTest {
 		raf.close();
 		//
 		final NewsRecord expected =
-			new NewsRecord(1, "título", "descripción", 'r');
+			new NewsRecord(0, "título", "descripción", 'r');
 		//
 		final DataFile dataFile = new DataFile(NEWS_DATA_FILE_NAME);
 		final NewsRecord actual = dataFile.getNextRandomNews();

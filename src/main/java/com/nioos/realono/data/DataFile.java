@@ -108,9 +108,9 @@ public class DataFile {
 	 * @return the NewsRecord with the next random news.
 	 */
 	public final NewsRecord getNextRandomNews() {
-		int nextId = 1; // NOPMD
+		int nextId = 0; // NOPMD
 		if (numberOfRecords > 1) {
-			nextId = random.nextInt(numberOfRecords - 1) + 1;
+			nextId = random.nextInt(numberOfRecords - 1);
 		}
 		//TODO
 		final NewsRecord result =

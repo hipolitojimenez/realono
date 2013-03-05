@@ -29,7 +29,7 @@ public class NewsJsonTest {
 		//
 		final File tmpFile = new File(DataFileTest.NEWS_DATA_FILE_NAME);
 		//
-		final String expected = "{\"description\":\"descripción\",\"id\":1,\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
+		final String expected = "{\"description\":\"descripción\",\"id\":0,\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
 		//
 		final NewsJson newsJson = new NewsJson("news.data");
 		final byte[] buffer = newsJson.getNextRandomNewsInJsonFormat();
