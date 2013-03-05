@@ -15,11 +15,21 @@ import com.nioos.realono.data.NewsRecord;
 
 
 
+/**
+ * DataFile junit tests.
+ * 
+ * @author Hipolito Jimenez.
+ */
 public class DataFileTest {
 	
 	
+	/**
+	 * Test getNextRandomNews().
+	 * 
+	 * @throws IOException on error.
+	 */
 	@Test
-	public void testGetNextRandomNews() throws IOException {
+	public final void testGetNextRandomNews() throws IOException {
 		//
 		String newsDataFileName = "news.data";
 		File tmpFile = new File(newsDataFileName);

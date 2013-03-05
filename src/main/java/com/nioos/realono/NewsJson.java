@@ -45,7 +45,7 @@ public class NewsJson {
 	 * 
 	 * @param newsDataFilePath the real path for the data file.
 	 */
-	public NewsJson(String newsDataFilePath) {
+	public NewsJson(final String newsDataFilePath) {
 		dataFile = new DataFile(newsDataFilePath);
 	}
 	
@@ -90,7 +90,10 @@ public class NewsJson {
 	}
 	
 	
-	public void stop() {
+	/**
+	 * Close the underlying DataFile object.
+	 */
+	public final void stop() {
 		dataFile.close();
 	}
 	

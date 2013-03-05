@@ -10,19 +10,41 @@ package com.nioos.realono.data;
 public class NewsRecord {
 	
 	
-	public static final int TITLE_REC_LEN = 1024;
+	/**
+	 * Title field length.
+	 */
+	public static final int TITLE_FIELD_LEN = 1024;
 	
 	
-	private static final String TITLE_FMT = "%1$" + TITLE_REC_LEN + "s";
+	/**
+	 * Title formating in the file.
+	 */
+	private static final String TITLE_FMT = "%1$" + TITLE_FIELD_LEN + "s";
 	
 	
-	public static final int DESC_REC_LEN = 4096;
+	/**
+	 * Description field length.
+	 */
+	public static final int DESC_FIELD_LEN = 4096;
 	
 	
-	private static final String DESC_FMT = "%1$" + DESC_REC_LEN + "s";
+	/**
+	 * Description formating in the file.
+	 */
+	private static final String DESC_FMT = "%1$" + DESC_FIELD_LEN + "s";
 	
 	
-	public static final int TOTAL_REC_LEN = TITLE_REC_LEN + DESC_REC_LEN + 4;
+	/**
+	 * char length in the file.
+	 */
+	private static final int CHAR_LEN = 4;
+	
+	
+	/**
+	 * Record length in the file.
+	 */
+	public static final int TOTAL_REC_LEN = TITLE_FIELD_LEN + DESC_FIELD_LEN
+		+ CHAR_LEN;
 	
 	
 	/**
@@ -103,7 +125,7 @@ public class NewsRecord {
 	
 	
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
@@ -116,45 +138,66 @@ public class NewsRecord {
 	
 	
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public final boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		NewsRecord other = (NewsRecord) obj;
 		if (description == null) {
-			if (other.description != null)
+			if (other.description != null) {
 				return false;
-		} else if (!description.equals(other.description))
+			}
+		} else if (!description.equals(other.description)) {
 			return false;
-		if (id != other.id)
+		}
+		if (id != other.id) {
 			return false;
-		if (realFake != other.realFake)
+		}
+		if (realFake != other.realFake) {
 			return false;
+		}
 		if (title == null) {
-			if (other.title != null)
+			if (other.title != null) {
 				return false;
-		} else if (!title.equals(other.title))
+			}
+		} else if (!title.equals(other.title)) {
 			return false;
+		}
 		return true;
 	}
 	
 	
-	public static String formatTitle(String theTitle) {
+	/**
+	 * Formats the title to be saved in the file.
+	 * 
+	 * @param theTitle the title.
+	 * @return the formated title.
+	 */
+	public static String formatTitle(final String theTitle) {
 		String result = theTitle;
-		if (theTitle.length() > TITLE_REC_LEN) {
-			result = theTitle.substring(0, TITLE_REC_LEN);
+		if (theTitle.length() > TITLE_FIELD_LEN) {
+			result = theTitle.substring(0, TITLE_FIELD_LEN);
 		}
 		return String.format(TITLE_FMT, result);
 	}
 	
 	
-	public static String formatDescription(String theDescription) {
+	/**
+	 * Formats the description to be saved in the file.
+	 * 
+	 * @param theDescription the description.
+	 * @return the formated description.
+	 */
+	public static String formatDescription(final String theDescription) {
 		String result = theDescription;
-		if (theDescription.length() > DESC_REC_LEN) {
-			result = theDescription.substring(0, DESC_REC_LEN);
+		if (theDescription.length() > DESC_FIELD_LEN) {
+			result = theDescription.substring(0, DESC_FIELD_LEN);
 		}
 		return String.format(DESC_FMT, result);
 	}

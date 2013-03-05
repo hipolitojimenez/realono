@@ -38,7 +38,7 @@ public class NewsJsonServlet extends HttpServlet {
      * @throws ServletException on error.
      */
     @Override
-	public void init() throws ServletException {
+	public final void init() throws ServletException {
 		super.init();
 		String newsDataFilePath =
 			getServletContext().getRealPath("/WEB-INF/news.data");
@@ -70,7 +70,7 @@ public class NewsJsonServlet extends HttpServlet {
 	
 	
 	@Override
-	public void destroy() {
+	public final void destroy() {
 		super.destroy();
 		newsJson.stop();
 	}

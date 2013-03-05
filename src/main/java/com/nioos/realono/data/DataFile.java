@@ -27,16 +27,30 @@ public class DataFile {
 	private static final Log LOG = LogFactory.getLog(DataFile.class);
 	
 	
+	/**
+	 * The file containing the records.
+	 */
 	private RandomAccessFile raf = null;
 	
 	
+	/**
+	 * Number of records in the file.
+	 */
 	private int numberOfRecords;
 	
 	
+	/**
+	 * Random number generator.
+	 */
 	private Random random = new Random();
 	
 	
-	public DataFile(String newsDataFilePath) {
+	/**
+	 * Constructor.
+	 * 
+	 * @param newsDataFilePath the data file path.
+	 */
+	public DataFile(final String newsDataFilePath) {
 		try {
 			raf = new RandomAccessFile(newsDataFilePath, "rw");
 		} catch (FileNotFoundException fnfe) {
@@ -55,7 +69,10 @@ public class DataFile {
 	}
 	
 	
-	public void close() {
+	/**
+	 * Close the file.
+	 */
+	public final void close() {
 		try {
 			raf.close();
 		} catch (IOException ioe) {
@@ -65,6 +82,11 @@ public class DataFile {
 	}
 	
 	
+	/**
+	 * Loads the data in the file.
+	 * 
+	 * The data is retrieved from rss.
+	 */
 	private void loadRssData() {
 		loadElMundoTodayRssData();
 		//TODO
@@ -72,6 +94,9 @@ public class DataFile {
 	}
 	
 	
+	/**
+	 * Retrieve the data from the http://www.elmundotoday.es rss.
+	 */
 	private void loadElMundoTodayRssData() {
 		// TODO Auto-generated method stub
 	}
