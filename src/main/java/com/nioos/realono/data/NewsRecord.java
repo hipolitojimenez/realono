@@ -2,6 +2,10 @@ package com.nioos.realono.data;
 
 
 
+import java.io.UnsupportedEncodingException;
+
+
+
 /**
  * Represents a news record.
  * 
@@ -20,7 +24,7 @@ public class NewsRecord {
 	/**
 	 * Title formating in the file.
 	 */
-	private static final String TITLE_FMT = "%1$" + TITLE_FIELD_LEN + "s";
+	private static final String TITLE_FMT = "%1$-" + TITLE_FIELD_LEN + "s";
 	
 	
 	/**
@@ -32,7 +36,7 @@ public class NewsRecord {
 	/**
 	 * Description formating in the file.
 	 */
-	private static final String DESC_FMT = "%1$" + DESC_FIELD_LEN + "s";
+	private static final String DESC_FMT = "%1$-" + DESC_FIELD_LEN + "s";
 	
 	
 	/**
@@ -182,12 +186,8 @@ public class NewsRecord {
 	 * @param theTitle the title.
 	 * @return the formated title.
 	 */
-	public static String formatTitle(final String theTitle) {
-		String result = theTitle; // NOPMD
-		if (theTitle.length() > TITLE_FIELD_LEN) {
-			result = theTitle.substring(0, TITLE_FIELD_LEN);
-		}
-		return String.format(TITLE_FMT, result);
+	public static byte[] formatTitle(final String theTitle) {
+		return formatString(theTitle, TITLE_FIELD_LEN, TITLE_FMT);
 	}
 	
 	
@@ -197,12 +197,35 @@ public class NewsRecord {
 	 * @param theDescription the description.
 	 * @return the formated description.
 	 */
-	public static String formatDescription(final String theDescription) {
-		String result = theDescription; // NOPMD
-		if (theDescription.length() > DESC_FIELD_LEN) {
-			result = theDescription.substring(0, DESC_FIELD_LEN);
+	public static byte[] formatDescription(final String theDescription) {
+		return formatString(theDescription, DESC_FIELD_LEN, DESC_FMT);
+	}
+	
+	
+	/**
+	 * Formats a string.
+	 * 
+	 * @param theString the String to be formated.
+	 * @param len the length of the returned byte array.
+	 * @param format the format used.
+	 * @return the formated byte array.
+	 */
+	private static byte[] formatString(final String theString, final int len,
+			final String format) {
+		String result = theString; // NOPMD
+		if (theString.length() > len) {
+			result = theString.substring(0, len); // NOPMD
 		}
-		return String.format(DESC_FMT, result);
+		result = String.format(format, result);
+		final byte[] buffer = new byte[len];
+		try {
+			final byte[] resultBytes = result.getBytes("UTF8");
+			System.arraycopy(resultBytes, 0, buffer, 0, len);
+		} catch (UnsupportedEncodingException uee) {
+			throw new IllegalArgumentException("UTF8 is not supported !!!",
+				uee);
+		}
+		return buffer;
 	}
 	
 	

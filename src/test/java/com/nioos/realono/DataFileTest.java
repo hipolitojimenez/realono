@@ -37,18 +37,7 @@ public class DataFileTest {
 	@Test
 	public final void testGetNextRandomNews() throws IOException {
 		//
-		final File tmpFile = new File(NEWS_DATA_FILE_NAME);
-		//
-		final RandomAccessFile raf = new RandomAccessFile(tmpFile, "rw");
-		String titulo = "título"; // NOPMD
-		titulo = NewsRecord.formatTitle(titulo);
-		raf.write(titulo.getBytes("UTF8"));
-		String descripcion = "descripción"; // NOPMD
-		descripcion = NewsRecord.formatDescription(descripcion);
-		raf.write(descripcion.getBytes("UTF8"));
-		raf.writeChar('r');
-		//
-		raf.close();
+		final File tmpFile = prepareTestDataFile();
 		//
 		final NewsRecord expected =
 			new NewsRecord(0, "título", "descripción", 'r');
@@ -64,6 +53,27 @@ public class DataFileTest {
 			throw new IOException("Cannot delete file '" + NEWS_DATA_FILE_NAME
 				+ "'");
 		}
+	}
+	
+	
+	/**
+	 * Prepare the data file used in the test.
+	 * 
+	 * @return the file prepared.
+	 * @throws IOException on error
+	 */
+	static File prepareTestDataFile() throws IOException { // NOPMD
+		final File tmpFile = new File(NEWS_DATA_FILE_NAME);
+		//
+		final RandomAccessFile raf = new RandomAccessFile(tmpFile, "rw");
+		String titulo = "título"; // NOPMD
+		raf.write(NewsRecord.formatTitle(titulo));
+		String descripcion = "descripción"; // NOPMD
+		raf.write(NewsRecord.formatDescription(descripcion));
+		raf.writeChar('r');
+		//
+		raf.close();
+		return tmpFile;
 	}
 	
 	

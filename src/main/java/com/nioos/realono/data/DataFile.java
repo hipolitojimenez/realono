@@ -55,17 +55,27 @@ public class DataFile {
 			raf = new RandomAccessFile(newsDataFilePath, "rw");
 		} catch (FileNotFoundException fnfe) {
 			LOG.fatal("Cannot access data file !!!", fnfe);
-			throw new IllegalArgumentException("Cannot access data file !!!",
+			throw new IllegalStateException("Cannot access data file !!!",
 				fnfe);
 		}
 		try {
 			final long len = raf.length();
 			numberOfRecords = (int) (len / NewsRecord.TOTAL_REC_LEN);
 		} catch (IOException ioe) {
-			LOG.fatal("Cannot read data file !!!", ioe);
-			throw new IllegalStateException("Cannot read data file !!!", ioe);
+			cannotReadDataFile(ioe);
 		}
 		loadRssData();
+	}
+	
+	
+	/**
+	 * Utility method to log data file read errors.
+	 * 
+	 * @param ioe the error.
+	 */
+	private void cannotReadDataFile(final IOException ioe) {
+		LOG.fatal("Cannot read data file !!!", ioe);
+		throw new IllegalStateException("Cannot read data file !!!", ioe);
 	}
 	
 	
@@ -74,7 +84,9 @@ public class DataFile {
 	 */
 	public final void close() {
 		try {
-			raf.close();
+			synchronized (raf) {
+				raf.close();
+			}
 		} catch (IOException ioe) {
 			LOG.fatal("Cannot close data file !!!", ioe);
 			throw new IllegalStateException("Cannot close data file !!!", ioe);
@@ -112,9 +124,30 @@ public class DataFile {
 		if (numberOfRecords > 1) {
 			nextId = random.nextInt(numberOfRecords - 1);
 		}
-		//TODO
-		final NewsRecord result =
-				new NewsRecord(nextId, "título", "descripción", 'r');
+		final int currentPosition = nextId * NewsRecord.TOTAL_REC_LEN;
+		NewsRecord result = null; // NOPMD
+		try {
+			synchronized (raf) {
+				raf.seek(currentPosition);
+				//
+				final byte[] titleBuffer = new byte[NewsRecord.TITLE_FIELD_LEN];
+				raf.readFully(titleBuffer);
+				final String fullTitle = new String(titleBuffer, "UTF8");
+				final String title = fullTitle.trim();
+				//
+				final byte[] descBuffer = new byte[NewsRecord.DESC_FIELD_LEN];
+				raf.readFully(descBuffer);
+				final String fullDesc = new String(descBuffer, "UTF8");
+				final String description = fullDesc.trim();
+				//
+				final char realOrFake = raf.readChar();
+				//
+				result = new NewsRecord(nextId, title, description, // NOPMD
+					realOrFake);
+			}
+		} catch (IOException ioe) {
+			cannotReadDataFile(ioe);
+		}
 		return result;
 	}
 	

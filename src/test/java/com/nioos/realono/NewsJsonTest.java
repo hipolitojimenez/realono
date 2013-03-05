@@ -27,7 +27,7 @@ public class NewsJsonTest {
 	public final void testGetNextRandomNewsInJsonFormat()
 			throws IOException {
 		//
-		final File tmpFile = new File(DataFileTest.NEWS_DATA_FILE_NAME);
+		final File tmpFile = DataFileTest.prepareTestDataFile();
 		//
 		final String expected = "{\"description\":\"descripción\",\"id\":0,\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
 		//
@@ -39,8 +39,8 @@ public class NewsJsonTest {
 		newsJson.stop();
 		final boolean deleted = tmpFile.delete();
 		if (!deleted) {
-			throw new IOException("Cannot delete file '" +
-				DataFileTest.NEWS_DATA_FILE_NAME + "'");
+			throw new IOException("Cannot delete file '"
+				+ DataFileTest.NEWS_DATA_FILE_NAME + "'");
 		}
 	}
 	
