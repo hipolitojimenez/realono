@@ -23,7 +23,10 @@ public class DataFileTest {
 		//
 		String newsDataFileName = "news.data";
 		File tmpFile = new File(newsDataFileName);
-		tmpFile.delete();
+		boolean deleted = tmpFile.delete();
+		if (!deleted) {
+			System.err.println("Cannot delete file 'news.data'");
+		}
 		//
 		RandomAccessFile raf = new RandomAccessFile(tmpFile, "rw");
 		String titulo = "título";
@@ -45,7 +48,10 @@ public class DataFileTest {
 		assertEquals("data file failed", expected, actual);
 		//
 		dataFile.close();
-		tmpFile.delete();
+		deleted = tmpFile.delete();
+		if (!deleted) {
+			System.err.println("Cannot delete file 'news.data'");
+		}
 	}
 	
 	

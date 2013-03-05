@@ -30,7 +30,10 @@ public class NewsJsonTest {
 		//
 		String newsDataFileName = "news.data";
 		File tmpFile = new File(newsDataFileName);
-		tmpFile.delete();
+		boolean deleted = tmpFile.delete();
+		if (!deleted) {
+			System.err.println("Cannot delete file 'news.data'");
+		}
 		//
 		final String expected = "{\"description\":\"descripción\",\"id\":1,\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
 		//
@@ -40,7 +43,10 @@ public class NewsJsonTest {
 		assertEquals("news failed", expected, actual);
 		//
 		newsJson.stop();
-		tmpFile.delete();
+		deleted = tmpFile.delete();
+		if (!deleted) {
+			System.err.println("Cannot delete file 'news.data'");
+		}
 	}
 	
 	
