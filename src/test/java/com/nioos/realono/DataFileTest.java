@@ -27,7 +27,7 @@ public class DataFileTest {
 		//
 		RandomAccessFile raf = new RandomAccessFile(tmpFile, "rw");
 		String titulo = "título";
-		titulo = String.format("%1$1024s", titulo); //TODO move to NewsRecord
+		titulo = NewsRecord.formatTitle(titulo);
 		raf.write(titulo.getBytes("UTF8"));
 		String descripcion = "descripción";
 		descripcion = String.format("%1$4096s", descripcion);

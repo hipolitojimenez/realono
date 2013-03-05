@@ -13,6 +13,9 @@ public class NewsRecord {
 	public static final int TITLE_REC_LEN = 1024;
 	
 	
+	private static final String TITLE_FMT = "%1$" + TITLE_REC_LEN + "s";
+	
+	
 	public static final int DESC_REC_LEN = 4096;
 	
 	
@@ -133,6 +136,15 @@ public class NewsRecord {
 		} else if (!title.equals(other.title))
 			return false;
 		return true;
+	}
+	
+	
+	public static String formatTitle(String theTitle) {
+		String result = theTitle;
+		if (theTitle.length() > TITLE_REC_LEN) {
+			result = theTitle.substring(0, TITLE_REC_LEN);
+		}
+		return String.format(TITLE_FMT, result);
 	}
 	
 	

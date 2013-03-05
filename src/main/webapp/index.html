@@ -83,8 +83,8 @@
 			$(document).ready(function() {
 				$.getJSON('news.json', function (data) {
 					iContador++;
-					$('#titulo').text(data.titulo);
-					$('#descripcion').text(data.descripcion);
+					$('#titulo').text(data.title);
+					$('#descripcion').text(data.description);
 					$('#contador').text('Noticia ' + iContador + ' de ' + tContador);
 					realFake = data.realFake;
 					//TODO load from server
