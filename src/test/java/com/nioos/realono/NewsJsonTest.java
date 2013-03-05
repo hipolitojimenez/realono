@@ -5,7 +5,7 @@ package com.nioos.realono;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 
 import org.junit.Test;
 
@@ -21,19 +21,13 @@ public class NewsJsonTest {
 	
 	/**
 	 * Test for the GetNextRandomNewsInJsonFormat method.
-	 * 
-	 * @throws UnsupportedEncodingException never
+	 * @throws IOException on error.
 	 */
 	@Test
 	public final void testGetNextRandomNewsInJsonFormat()
-			throws UnsupportedEncodingException {
+			throws IOException {
 		//
-		String newsDataFileName = "news.data";
-		File tmpFile = new File(newsDataFileName);
-		boolean deleted = tmpFile.delete();
-		if (!deleted) {
-			System.err.println("Cannot delete file 'news.data'");
-		}
+		final File tmpFile = new File(DataFileTest.NEWS_DATA_FILE_NAME);
 		//
 		final String expected = "{\"description\":\"descripción\",\"id\":1,\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
 		//
@@ -43,9 +37,10 @@ public class NewsJsonTest {
 		assertEquals("news failed", expected, actual);
 		//
 		newsJson.stop();
-		deleted = tmpFile.delete();
+		final boolean deleted = tmpFile.delete();
 		if (!deleted) {
-			System.err.println("Cannot delete file 'news.data'");
+			throw new IOException("Cannot delete file '" +
+				DataFileTest.NEWS_DATA_FILE_NAME + "'");
 		}
 	}
 	

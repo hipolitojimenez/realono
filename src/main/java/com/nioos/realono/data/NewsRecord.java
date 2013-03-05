@@ -7,6 +7,7 @@ package com.nioos.realono.data;
  * 
  * @author Hipolito Jimenez
  */
+@SuppressWarnings("PMD.CyclomaticComplexity")
 public class NewsRecord {
 	
 	
@@ -56,19 +57,19 @@ public class NewsRecord {
 	/**
 	 * News title.
 	 */
-	private final String title;
+	private final transient String title;
 	
 	
 	/**
 	 * News little description.
 	 */
-	private final String description;
+	private final transient String description;
 	
 	
 	/**
 	 * Is the news real or fake?
 	 */
-	private final char realFake;
+	private final transient char realFake;
 	
 	
 	/**
@@ -125,6 +126,7 @@ public class NewsRecord {
 	
 	
 	@Override
+	@SuppressWarnings("PMD")
 	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -138,6 +140,7 @@ public class NewsRecord {
 	
 	
 	@Override
+	@SuppressWarnings("PMD")
 	public final boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
@@ -180,7 +183,7 @@ public class NewsRecord {
 	 * @return the formated title.
 	 */
 	public static String formatTitle(final String theTitle) {
-		String result = theTitle;
+		String result = theTitle; // NOPMD
 		if (theTitle.length() > TITLE_FIELD_LEN) {
 			result = theTitle.substring(0, TITLE_FIELD_LEN);
 		}
@@ -195,7 +198,7 @@ public class NewsRecord {
 	 * @return the formated description.
 	 */
 	public static String formatDescription(final String theDescription) {
-		String result = theDescription;
+		String result = theDescription; // NOPMD
 		if (theDescription.length() > DESC_FIELD_LEN) {
 			result = theDescription.substring(0, DESC_FIELD_LEN);
 		}

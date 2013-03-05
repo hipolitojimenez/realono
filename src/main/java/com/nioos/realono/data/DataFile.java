@@ -30,19 +30,19 @@ public class DataFile {
 	/**
 	 * The file containing the records.
 	 */
-	private RandomAccessFile raf = null;
+	private final transient RandomAccessFile raf;
 	
 	
 	/**
 	 * Number of records in the file.
 	 */
-	private int numberOfRecords;
+	private transient int numberOfRecords;
 	
 	
 	/**
 	 * Random number generator.
 	 */
-	private Random random = new Random();
+	private final transient Random random = new Random();
 	
 	
 	/**
@@ -59,7 +59,7 @@ public class DataFile {
 				fnfe);
 		}
 		try {
-			long len = raf.length();
+			final long len = raf.length();
 			numberOfRecords = (int) (len / NewsRecord.TOTAL_REC_LEN);
 		} catch (IOException ioe) {
 			LOG.fatal("Cannot read data file !!!", ioe);
@@ -108,7 +108,7 @@ public class DataFile {
 	 * @return the NewsRecord with the next random news.
 	 */
 	public final NewsRecord getNextRandomNews() {
-		int nextId = 1;
+		int nextId = 1; // NOPMD
 		if (numberOfRecords > 1) {
 			nextId = random.nextInt(numberOfRecords - 1) + 1;
 		}

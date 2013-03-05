@@ -24,6 +24,12 @@ public class DataFileTest {
 	
 	
 	/**
+	 * Data file name used for the tests.
+	 */
+	static final String NEWS_DATA_FILE_NAME = "news.data"; // NOPMD
+	
+	
+	/**
 	 * Test getNextRandomNews().
 	 * 
 	 * @throws IOException on error.
@@ -31,36 +37,32 @@ public class DataFileTest {
 	@Test
 	public final void testGetNextRandomNews() throws IOException {
 		//
-		String newsDataFileName = "news.data";
-		File tmpFile = new File(newsDataFileName);
-		boolean deleted = tmpFile.delete();
-		if (!deleted) {
-			System.err.println("Cannot delete file 'news.data'");
-		}
+		final File tmpFile = new File(NEWS_DATA_FILE_NAME);
 		//
-		RandomAccessFile raf = new RandomAccessFile(tmpFile, "rw");
-		String titulo = "título";
+		final RandomAccessFile raf = new RandomAccessFile(tmpFile, "rw");
+		String titulo = "título"; // NOPMD
 		titulo = NewsRecord.formatTitle(titulo);
 		raf.write(titulo.getBytes("UTF8"));
-		String descripcion = "descripción";
+		String descripcion = "descripción"; // NOPMD
 		descripcion = NewsRecord.formatDescription(descripcion);
 		raf.write(descripcion.getBytes("UTF8"));
 		raf.writeChar('r');
 		//
 		raf.close();
 		//
-		NewsRecord expected =
+		final NewsRecord expected =
 			new NewsRecord(1, "título", "descripción", 'r');
 		//
-		DataFile dataFile = new DataFile(newsDataFileName);
-		NewsRecord actual = dataFile.getNextRandomNews();
+		final DataFile dataFile = new DataFile(NEWS_DATA_FILE_NAME);
+		final NewsRecord actual = dataFile.getNextRandomNews();
 		//
 		assertEquals("data file failed", expected, actual);
 		//
 		dataFile.close();
-		deleted = tmpFile.delete();
+		final boolean deleted = tmpFile.delete();
 		if (!deleted) {
-			System.err.println("Cannot delete file 'news.data'");
+			throw new IOException("Cannot delete file '" + NEWS_DATA_FILE_NAME
+				+ "'");
 		}
 	}
 	
