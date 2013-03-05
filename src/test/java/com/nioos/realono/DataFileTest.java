@@ -30,7 +30,7 @@ public class DataFileTest {
 		titulo = NewsRecord.formatTitle(titulo);
 		raf.write(titulo.getBytes("UTF8"));
 		String descripcion = "descripción";
-		descripcion = String.format("%1$4096s", descripcion);
+		descripcion = NewsRecord.formatDescription(descripcion);
 		raf.write(descripcion.getBytes("UTF8"));
 		raf.writeChar('r');
 		//

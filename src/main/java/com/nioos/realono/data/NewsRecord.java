@@ -19,6 +19,9 @@ public class NewsRecord {
 	public static final int DESC_REC_LEN = 4096;
 	
 	
+	private static final String DESC_FMT = "%1$" + DESC_REC_LEN + "s";
+	
+	
 	public static final int TOTAL_REC_LEN = TITLE_REC_LEN + DESC_REC_LEN + 4;
 	
 	
@@ -145,6 +148,15 @@ public class NewsRecord {
 			result = theTitle.substring(0, TITLE_REC_LEN);
 		}
 		return String.format(TITLE_FMT, result);
+	}
+	
+	
+	public static String formatDescription(String theDescription) {
+		String result = theDescription;
+		if (theDescription.length() > DESC_REC_LEN) {
+			result = theDescription.substring(0, DESC_REC_LEN);
+		}
+		return String.format(DESC_FMT, result);
 	}
 	
 	
