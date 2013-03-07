@@ -18,7 +18,7 @@ public class NewsRecord {
 	/**
 	 * Title field length.
 	 */
-	public static final int TITLE_FIELD_LEN = 1024;
+	public static final int TITLE_FIELD_LEN = 256;
 	
 	
 	/**
@@ -30,7 +30,7 @@ public class NewsRecord {
 	/**
 	 * Link field length.
 	 */
-	public static final int LINK_FIELD_LEN = 1024;
+	public static final int LINK_FIELD_LEN = 256;
 	
 	
 	/**
@@ -42,7 +42,7 @@ public class NewsRecord {
 	/**
 	 * Description field length.
 	 */
-	public static final int DESC_FIELD_LEN = 4096;
+	public static final int DESC_FIELD_LEN = 512;
 	
 	
 	/**
@@ -54,7 +54,7 @@ public class NewsRecord {
 	/**
 	 * char length in the file.
 	 */
-	private static final int CHAR_LEN = 4;
+	private static final int CHAR_LEN = 2;
 	
 	
 	/**
@@ -163,7 +163,7 @@ public class NewsRecord {
 	 * @return the news description.
 	 */
 	public final String getDescription() {
-		return description;
+		return description + "...";
 	}
 	
 	

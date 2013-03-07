@@ -40,7 +40,8 @@ public class NewsJsonServlet extends HttpServlet {
     @Override
 	public final void init() throws ServletException {
 		super.init();
-		final String dataPath = getServletContext().getRealPath("/WEB-INF/");
+		final String dataPath = getServletContext().getRealPath("/WEB-INF/")
+			+ "/";
     	newsJson = new NewsJson(dataPath);
 	}
     

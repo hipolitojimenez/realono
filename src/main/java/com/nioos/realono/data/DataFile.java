@@ -105,7 +105,7 @@ public class DataFile {
 	 */
 	public DataFile(final String dataPath, final boolean loadData) {
 		emtDateFile = dataPath + "emt.date";
-		emtDateFile = dataPath + "pemt.date";
+		pemtDateFile = dataPath + "pemt.date";
 		//
 		try {
 			raf = new RandomAccessFile(dataPath + "news.data", "rw");
@@ -151,9 +151,9 @@ public class DataFile {
 			result = dateFile.readLong();
 			dateFile.close();
 		} catch (FileNotFoundException fnfe) {
-			LOG.error("Cannot find 'emt.data' file !!!", fnfe);
+			LOG.error("Cannot find date file !!!", fnfe);
 		} catch (IOException ioe) {
-			LOG.error("Cannot read 'emt.data' file !!!", ioe);
+			LOG.error("Cannot read date file !!!", ioe);
 		}
 		return result;
 	}

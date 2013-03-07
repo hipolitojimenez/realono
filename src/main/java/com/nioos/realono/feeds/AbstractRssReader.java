@@ -5,6 +5,7 @@ package com.nioos.realono.feeds;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -67,6 +68,7 @@ public abstract class AbstractRssReader {
 		} catch (FetcherException fetchEx) {
 			LOG.error("Fetcher Error", fetchEx);
 		}
+		Collections.reverse(result);
 		return result;
 	}
 	

@@ -9,6 +9,7 @@
     <display-name>NewsJsonServlet</display-name>
     <servlet-name>NewsJsonServlet</servlet-name>
     <servlet-class>com.nioos.realono.servlets.NewsJsonServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>NewsJsonServlet</servlet-name>
