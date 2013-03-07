@@ -4,12 +4,13 @@ package com.nioos.realono.feeds;
 
 import static org.junit.Assert.assertEquals;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.junit.Test;
 import org.rometools.fetcher.FeedFetcher;
 import org.rometools.fetcher.impl.FeedFetcherCache;
@@ -35,7 +36,7 @@ public class PemtRssReaderTest {
 	/**
 	 * News Description.
 	 */
-	private static final String DESCRIPCION = "La alcaldesa conservadora de Fuengirola declara el 14 de abril Día del Perro La alcaldesa de la localidad malagueña de Fuengirola, Esperanza Oña,  vuelve a protagonizar otro episodio de controversia al asegurar que el próximo 14 de abril, fecha que conmemora la proclamación de la II República Española, se celebrará el “día del perro” en Fuengirola, según publican fuentes locales. La edil popular, conocida como la Esperanza Aguirre andaluza, ha sido duramente criticada por este hecho en las redes sociales. Tras la recriminación en la red, decidió arreglar el entuerto afirmando que  Zapatero eligió el 20N para celebrar las elecciones generales. No es la primera vez que la alcaldesa de Fuengirola se ve envuelta en una polémica de este tipo. Tras la muerte, del ex ministro franquista, José Antonio Girón de Velasco, en 1995, Oña declaró a la Cadena Ser que, “Girón consiguió socialmente grandes avances aunque habrá personas que no querrán reconocerlo porque le vayan a tildar de no sé qué”. ";
+	private static final String DESCRIPCION = "Descripción";
 	
 	
 	/**
@@ -48,22 +49,28 @@ public class PemtRssReaderTest {
 	 * News Original Link.
 	 */
 	private static final String ORIGINAL_LINK =
-		"http://parecedelmundotoday.tumblr.com/post/44612549624";
+		"http://localhost:1234/test.html";
 	
 	
 	/**
 	 * News Link.
 	 */
-	private static final String LINK = "http://www.publico.es/espana/451633/la-alcaldesa-conservadora-de-fuengirola-declara-el-14-de-abril-dia-del-perro";
+	private static final String LINK = "http://realono.nioos.com/";
 	
 	
 	/**
 	 * Test getAllRecords().
-	 * 
-	 * @throws MalformedURLException on error.
+	 * @throws Exception on error.
 	 */
 	@Test
-	public final void testGetAllRecords() throws MalformedURLException {
+	public final void testGetAllRecords() throws Exception {
+		//
+		Server server = new Server(1234);
+		ResourceHandler resourceHandler = new ResourceHandler();
+		resourceHandler.setResourceBase("html_test_pages/");
+		server.setHandler(resourceHandler);
+		server.start();
+		//
 		final PemtRssReader pemsRssReader = new PemtRssReader();
 		final FeedFetcherCache localCache = new HashMapFeedInfoCache();
 		final SyndFeedInfo syndFeedInfo = new SyndFeedInfo();
@@ -100,6 +107,8 @@ public class PemtRssReaderTest {
 		assertEquals("invalid title", TITLE, title);
 		final char realFake = record.getRealFake();
 		assertEquals("invalid realFake", 'r', realFake);
+		//
+		server.stop();
 	}
 	
 	
