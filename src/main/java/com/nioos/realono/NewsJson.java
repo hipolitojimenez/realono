@@ -51,6 +51,17 @@ public class NewsJson {
 	
 	
 	/**
+	 * Constructor.
+	 * 
+	 * @param newsDataFilePath the real path for the data file.
+	 * @param loadData load rss data on startup?
+	 */
+	public NewsJson(final String newsDataFilePath, final boolean loadData) {
+		dataFile = new DataFile(newsDataFilePath, loadData);
+	}
+	
+	
+	/**
 	 * Get the next random news from the data file in json format.
 	 * 
 	 * @return the byte array that contains the json string.

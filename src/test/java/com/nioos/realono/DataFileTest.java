@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -21,6 +22,24 @@ import com.nioos.realono.data.NewsRecord;
  * @author Hipolito Jimenez.
  */
 public class DataFileTest {
+	
+	
+	/**
+	 * News link.
+	 */
+	private static final String LINK = "http://realono.nioos.com/";
+	
+	
+	/**
+	 * News Description.
+	 */
+	private static final String DESCRIPCION = "descripción";
+	
+	
+	/**
+	 * News Title.
+	 */
+	private static final String TITULO = "título";
 	
 	
 	/**
@@ -40,9 +59,9 @@ public class DataFileTest {
 		final File tmpFile = prepareTestDataFile();
 		//
 		final NewsRecord expected =
-			new NewsRecord(0, "título", "descripción", 'r');
+			new NewsRecord(0, TITULO, DESCRIPCION, 'r', LINK, new Date(0L));
 		//
-		final DataFile dataFile = new DataFile(NEWS_DATA_FILE_NAME);
+		final DataFile dataFile = new DataFile(NEWS_DATA_FILE_NAME, false);
 		final NewsRecord actual = dataFile.getNextRandomNews();
 		//
 		assertEquals("data file failed", expected, actual);
@@ -66,10 +85,9 @@ public class DataFileTest {
 		final File tmpFile = new File(NEWS_DATA_FILE_NAME);
 		//
 		final RandomAccessFile raf = new RandomAccessFile(tmpFile, "rw");
-		String titulo = "título"; // NOPMD
-		raf.write(NewsRecord.formatTitle(titulo));
-		String descripcion = "descripción"; // NOPMD
-		raf.write(NewsRecord.formatDescription(descripcion));
+		raf.write(NewsRecord.formatTitle(TITULO));
+		raf.write(NewsRecord.formatDescription(DESCRIPCION));
+		raf.write(NewsRecord.formatLink(LINK));
 		raf.writeChar('r');
 		//
 		raf.close();

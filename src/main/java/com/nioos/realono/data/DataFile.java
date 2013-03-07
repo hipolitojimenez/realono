@@ -5,10 +5,16 @@ package com.nioos.realono.data;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.nioos.realono.feeds.EmtRssReader;
+import com.nioos.realono.feeds.PemtRssReader;
+import com.nioos.realono.feeds.AbstractRssReader;
 
 
 
@@ -46,11 +52,34 @@ public class DataFile {
 	
 	
 	/**
+	 * El Mundo Today Rss Reader.
+	 */
+	private final transient AbstractRssReader emtRss = new EmtRssReader();
+	
+	
+	/**
+	 * Parece Del Mundo Today Rss Reader.
+	 */
+	private final transient AbstractRssReader pemtRss = new PemtRssReader();
+	
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param newsDataFilePath the data file path.
 	 */
 	public DataFile(final String newsDataFilePath) {
+		this(newsDataFilePath, true);
+	}
+	
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param newsDataFilePath the data file path.
+	 * @param loadData load rss data on startup?
+	 */
+	public DataFile(final String newsDataFilePath, final boolean loadData) {
 		try {
 			raf = new RandomAccessFile(newsDataFilePath, "rw");
 		} catch (FileNotFoundException fnfe) {
@@ -64,7 +93,9 @@ public class DataFile {
 		} catch (IOException ioe) {
 			cannotReadDataFile(ioe);
 		}
-		loadRssData();
+		if (loadData) {
+			loadRssData();
+		}
 	}
 	
 	
@@ -101,8 +132,8 @@ public class DataFile {
 	 */
 	private void loadRssData() {
 		loadElMundoTodayRssData();
-		//TODO
-		//loadNotElMundoTodayRssData();
+		loadPareceDelMundoTodayRssData();
+		//loadnotelmundotoday...
 	}
 	
 	
@@ -110,7 +141,23 @@ public class DataFile {
 	 * Retrieve the data from the http://www.elmundotoday.es rss.
 	 */
 	private void loadElMundoTodayRssData() {
-		// TODO Auto-generated method stub
+		final List<NewsRecord> records = emtRss.getAllRecords();
+		for (NewsRecord record : records) {
+			//TODO
+			LOG.debug(record);
+		}
+	}
+	
+	
+	/**
+	 * Retrieve the data from the http://parecedelmundotoday.tumblr.com/ rss.
+	 */
+	private void loadPareceDelMundoTodayRssData() {
+		final List<NewsRecord> records = pemtRss.getAllRecords();
+		for (NewsRecord record : records) {
+			//TODO
+			LOG.debug(record);
+		}
 	}
 	
 	
@@ -140,10 +187,15 @@ public class DataFile {
 				final String fullDesc = new String(descBuffer, "UTF8");
 				final String description = fullDesc.trim();
 				//
+				final byte[] linkBuffer = new byte[NewsRecord.LINK_FIELD_LEN];
+				raf.readFully(linkBuffer);
+				final String fullLink = new String(linkBuffer, "UTF8");
+				final String link = fullLink.trim();
+				//
 				final char realOrFake = raf.readChar();
 				//
 				result = new NewsRecord(nextId, title, description, // NOPMD
-					realOrFake);
+					realOrFake, link, new Date(0L));
 			}
 		} catch (IOException ioe) {
 			cannotReadDataFile(ioe);

@@ -29,9 +29,9 @@ public class NewsJsonTest {
 		//
 		final File tmpFile = DataFileTest.prepareTestDataFile();
 		//
-		final String expected = "{\"description\":\"descripción\",\"id\":0,\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
+		final String expected = "{\"date\":0,\"description\":\"descripción\",\"id\":0,\"link\":\"http://realono.nioos.com/\",\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
 		//
-		final NewsJson newsJson = new NewsJson("news.data");
+		final NewsJson newsJson = new NewsJson("news.data", false);
 		final byte[] buffer = newsJson.getNextRandomNewsInJsonFormat();
 		final String actual = new String(buffer, "UTF8");
 		assertEquals("news failed", expected, actual);

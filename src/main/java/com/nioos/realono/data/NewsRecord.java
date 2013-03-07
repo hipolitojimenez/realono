@@ -3,6 +3,7 @@ package com.nioos.realono.data;
 
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 
 
@@ -11,7 +12,6 @@ import java.io.UnsupportedEncodingException;
  * 
  * @author Hipolito Jimenez
  */
-@SuppressWarnings("PMD.CyclomaticComplexity")
 public class NewsRecord {
 	
 	
@@ -25,6 +25,18 @@ public class NewsRecord {
 	 * Title formating in the file.
 	 */
 	private static final String TITLE_FMT = "%1$-" + TITLE_FIELD_LEN + "s";
+	
+	
+	/**
+	 * Link field length.
+	 */
+	public static final int LINK_FIELD_LEN = 1024;
+	
+	
+	/**
+	 * Link formating in the file.
+	 */
+	private static final String LINK_FMT = "%1$-" + LINK_FIELD_LEN + "s";
 	
 	
 	/**
@@ -49,13 +61,13 @@ public class NewsRecord {
 	 * Record length in the file.
 	 */
 	public static final int TOTAL_REC_LEN = TITLE_FIELD_LEN + DESC_FIELD_LEN
-		+ CHAR_LEN;
+		+ CHAR_LEN + LINK_FIELD_LEN;
 	
 	
 	/**
 	 * Record identifier.
 	 */
-	private final int id; // NOPMD
+	private final transient int id; // NOPMD
 	
 	
 	/**
@@ -77,19 +89,36 @@ public class NewsRecord {
 	
 	
 	/**
+	 * News link.
+	 */
+	private final transient String link;
+	
+	
+	/**
+	 * News date.
+	 */
+	private final transient long date;
+	
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param theId the record id.
 	 * @param theTitle the news title.
 	 * @param theDesc the news description.
 	 * @param real is the news real or fake?
+	 * @param theLink the news link.
+	 * @param theDate the news publish date.
 	 */
 	public NewsRecord(final int theId, final String theTitle,
-			final String theDesc, final char real) {
+			final String theDesc, final char real, final String theLink,
+			final Date theDate) {
 		id = theId;
 		title = theTitle;
 		description = theDesc;
 		realFake = real;
+		link = theLink;
+		date = theDate.getTime();
 	}
 	
 	
@@ -112,6 +141,24 @@ public class NewsRecord {
 	
 	
 	/**
+	 * Gets the news link.
+	 * @return the news link.
+	 */
+	public final String getLink() {
+		return link;
+	}
+	
+	
+	/**
+	 * Gets the news date.
+	 * @return the news date.
+	 */
+	public final long getDate() {
+		return date;
+	}
+	
+	
+	/**
 	 * Gets the news description.
 	 * @return the news description.
 	 */
@@ -129,57 +176,6 @@ public class NewsRecord {
 	}
 	
 	
-	@Override
-	@SuppressWarnings("PMD")
-	public final int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + id;
-		result = prime * result + realFake;
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		return result;
-	}
-	
-	
-	@Override
-	@SuppressWarnings("PMD")
-	public final boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		NewsRecord other = (NewsRecord) obj;
-		if (description == null) {
-			if (other.description != null) {
-				return false;
-			}
-		} else if (!description.equals(other.description)) {
-			return false;
-		}
-		if (id != other.id) {
-			return false;
-		}
-		if (realFake != other.realFake) {
-			return false;
-		}
-		if (title == null) {
-			if (other.title != null) {
-				return false;
-			}
-		} else if (!title.equals(other.title)) {
-			return false;
-		}
-		return true;
-	}
-	
-	
 	/**
 	 * Formats the title to be saved in the file.
 	 * 
@@ -188,6 +184,17 @@ public class NewsRecord {
 	 */
 	public static byte[] formatTitle(final String theTitle) {
 		return formatString(theTitle, TITLE_FIELD_LEN, TITLE_FMT);
+	}
+	
+	
+	/**
+	 * Formats the link to be saved in the file.
+	 * 
+	 * @param theLink the link.
+	 * @return the formated link.
+	 */
+	public static byte[] formatLink(final String theLink) {
+		return formatString(theLink, LINK_FIELD_LEN, LINK_FMT);
 	}
 	
 	
@@ -226,6 +233,46 @@ public class NewsRecord {
 				uee);
 		}
 		return buffer;
+	}
+	
+	
+	@Override
+	@SuppressWarnings("PMD")
+	public final int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((link == null) ? 0 : link.hashCode());
+		return result;
+	}
+	
+	
+	@Override
+	@SuppressWarnings("PMD")
+	public final boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		NewsRecord other = (NewsRecord) obj;
+		if (link == null) {
+			if (other.link != null) {
+				return false;
+			}
+		} else if (!link.equals(other.link)) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	@Override
+	public final String toString() {
+		return "NewsRecord [link=" + link + "]";
 	}
 	
 	
