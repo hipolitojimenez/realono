@@ -64,24 +64,51 @@ public class DataFile {
 	
 	
 	/**
+	 * Last emt date.
+	 */
+	private transient long lastEmtDate = 0;
+	
+	
+	/**
+	 * Last pemt date.
+	 */
+	private transient long lastPemtDate = 0;
+	
+	
+	/**
+	 * emt date file.
+	 */
+	private transient String emtDateFile;
+	
+	
+	/**
+	 * pemt date file.
+	 */
+	private transient String pemtDateFile;
+	
+	
+	/**
 	 * Constructor.
 	 * 
-	 * @param newsDataFilePath the data file path.
+	 * @param dataPath the data path.
 	 */
-	public DataFile(final String newsDataFilePath) {
-		this(newsDataFilePath, true);
+	public DataFile(final String dataPath) {
+		this(dataPath, true);
 	}
 	
 	
 	/**
 	 * Constructor.
 	 * 
-	 * @param newsDataFilePath the data file path.
+	 * @param dataPath the data path.
 	 * @param loadData load rss data on startup?
 	 */
-	public DataFile(final String newsDataFilePath, final boolean loadData) {
+	public DataFile(final String dataPath, final boolean loadData) {
+		emtDateFile = dataPath + "emt.date";
+		emtDateFile = dataPath + "pemt.date";
+		//
 		try {
-			raf = new RandomAccessFile(newsDataFilePath, "rw");
+			raf = new RandomAccessFile(dataPath + "news.data", "rw");
 		} catch (FileNotFoundException fnfe) {
 			LOG.fatal("Cannot access data file !!!", fnfe);
 			throw new IllegalStateException("Cannot access data file !!!",
@@ -94,8 +121,41 @@ public class DataFile {
 			cannotReadDataFile(ioe);
 		}
 		if (loadData) {
+			loadDates();
 			loadRssData();
 		}
+	}
+	
+	
+	/**
+	 * Load last dates from the date files.
+	 */
+	private void loadDates() {
+		lastEmtDate = loadDate(emtDateFile);
+		lastPemtDate = loadDate(pemtDateFile);
+		// TODO Auto-generated method stub
+	}
+	
+	
+	/**
+	 * Load last rss date from file.
+	 * 
+	 * @param dateFileName the date file name.
+	 * @return the last date.
+	 */
+	private long loadDate(final String dateFileName) {
+		long result = 0; // NOPMD
+		try {
+			final RandomAccessFile dateFile =
+				new RandomAccessFile(dateFileName, "rw");
+			result = dateFile.readLong();
+			dateFile.close();
+		} catch (FileNotFoundException fnfe) {
+			LOG.error("Cannot find 'emt.data' file !!!", fnfe);
+		} catch (IOException ioe) {
+			LOG.error("Cannot read 'emt.data' file !!!", ioe);
+		}
+		return result;
 	}
 	
 	
@@ -143,9 +203,42 @@ public class DataFile {
 	private void loadElMundoTodayRssData() {
 		final List<NewsRecord> records = emtRss.getAllRecords();
 		for (NewsRecord record : records) {
-			//TODO
-			LOG.debug(record);
+			final long recordDate = record.getDate();
+			if (recordDate > lastEmtDate) {
+				lastEmtDate = recordDate;
+				saveRecord(record, 'f', emtDateFile);
+			}
 		}
+	}
+	
+	
+	/**
+	 * Save the record to file.
+	 * 
+	 * @param record the record to be saved.
+	 * @param realFake is real or fake?
+	 * @param file the date file.
+	 */
+	private void saveRecord(final NewsRecord record, final char realFake,
+			final String file) {
+		try {
+			synchronized (raf) {
+				raf.write(NewsRecord.formatTitle(record.getTitle()));
+			  raf.write(NewsRecord.formatDescription(record.getDescription()));
+				raf.write(NewsRecord.formatLink(record.getLink()));
+				raf.writeChar(realFake);
+				raf.getFD().sync();
+			}
+			//
+			final RandomAccessFile dateFile = new RandomAccessFile(file, "rw");
+			dateFile.writeLong(record.getDate());
+			dateFile.close();
+		} catch (IOException ioe) {
+			LOG.fatal("Cannot write file !!!", ioe);
+			throw new IllegalStateException("Cannot write file !!!", ioe);
+		}
+		//
+		numberOfRecords++;
 	}
 	
 	
@@ -155,8 +248,11 @@ public class DataFile {
 	private void loadPareceDelMundoTodayRssData() {
 		final List<NewsRecord> records = pemtRss.getAllRecords();
 		for (NewsRecord record : records) {
-			//TODO
-			LOG.debug(record);
+			final long recordDate = record.getDate();
+			if (recordDate > lastPemtDate) {
+				lastPemtDate = recordDate;
+				saveRecord(record, 'r', pemtDateFile);
+			}
 		}
 	}
 	

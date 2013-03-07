@@ -61,7 +61,7 @@ public class DataFileTest {
 		final NewsRecord expected =
 			new NewsRecord(0, TITULO, DESCRIPCION, 'r', LINK, new Date(0L));
 		//
-		final DataFile dataFile = new DataFile(NEWS_DATA_FILE_NAME, false);
+		final DataFile dataFile = new DataFile("", false);
 		final NewsRecord actual = dataFile.getNextRandomNews();
 		//
 		assertEquals("data file failed", expected, actual);

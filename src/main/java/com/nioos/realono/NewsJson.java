@@ -43,21 +43,21 @@ public class NewsJson {
 	/**
 	 * Constructor.
 	 * 
-	 * @param newsDataFilePath the real path for the data file.
+	 * @param dataPath the real path for the data file.
 	 */
-	public NewsJson(final String newsDataFilePath) {
-		dataFile = new DataFile(newsDataFilePath);
+	public NewsJson(final String dataPath) {
+		dataFile = new DataFile(dataPath);
 	}
 	
 	
 	/**
 	 * Constructor.
 	 * 
-	 * @param newsDataFilePath the real path for the data file.
+	 * @param dataPath the real path for the data file.
 	 * @param loadData load rss data on startup?
 	 */
-	public NewsJson(final String newsDataFilePath, final boolean loadData) {
-		dataFile = new DataFile(newsDataFilePath, loadData);
+	public NewsJson(final String dataPath, final boolean loadData) {
+		dataFile = new DataFile(dataPath, loadData);
 	}
 	
 	

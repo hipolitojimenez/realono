@@ -34,6 +34,12 @@ public class PemtRssReaderTest {
 	
 	
 	/**
+	 * Test http port.
+	 */
+	private static final int HTTP_PORT = 1234;
+	
+	
+	/**
 	 * News Description.
 	 */
 	private static final String DESCRIPCION = "Descripción";
@@ -63,10 +69,10 @@ public class PemtRssReaderTest {
 	 * @throws Exception on error.
 	 */
 	@Test
-	public final void testGetAllRecords() throws Exception {
+	public final void testGetAllRecords() throws Exception { // NOPMD
 		//
-		Server server = new Server(1234);
-		ResourceHandler resourceHandler = new ResourceHandler();
+		final Server server = new Server(HTTP_PORT);
+		final ResourceHandler resourceHandler = new ResourceHandler();
 		resourceHandler.setResourceBase("html_test_pages/");
 		server.setHandler(resourceHandler);
 		server.start();
