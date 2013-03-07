@@ -8,6 +8,9 @@ import java.io.RandomAccessFile;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -88,6 +91,19 @@ public class DataFile {
 	
 	
 	/**
+	 * Scheduled Executor Service.
+	 */
+	private final transient ScheduledExecutorService executor =
+		Executors.newSingleThreadScheduledExecutor();
+	
+	
+	/**
+	 * Delay in seconds (one day).
+	 */
+	private static final long DELAY = 60 * 60 * 24;
+	
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param dataPath the data path.
@@ -124,6 +140,14 @@ public class DataFile {
 			loadDates();
 			loadRssData();
 		}
+		//
+		final Runnable command = new Runnable() { // NOPMD
+			public void run() {
+				loadRssData();
+			}
+		};
+		executor.scheduleWithFixedDelay(command, DELAY, DELAY,
+			TimeUnit.SECONDS);
 	}
 	
 	
@@ -133,7 +157,6 @@ public class DataFile {
 	private void loadDates() {
 		lastEmtDate = loadDate(emtDateFile);
 		lastPemtDate = loadDate(pemtDateFile);
-		// TODO Auto-generated method stub
 	}
 	
 	
@@ -174,6 +197,7 @@ public class DataFile {
 	 * Close the file.
 	 */
 	public final void close() {
+		executor.shutdownNow();
 		try {
 			synchronized (raf) {
 				raf.close();
@@ -193,7 +217,6 @@ public class DataFile {
 	private void loadRssData() {
 		loadElMundoTodayRssData();
 		loadPareceDelMundoTodayRssData();
-		//loadnotelmundotoday...
 	}
 	
 	
