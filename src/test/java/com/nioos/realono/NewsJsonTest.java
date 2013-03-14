@@ -29,10 +29,36 @@ public class NewsJsonTest {
 		//
 		final File tmpFile = DataFileTest.prepareTestDataFile();
 		//
-		final String expected = "{\"date\":0,\"description\":\"descripción\",\"id\":0,\"link\":\"http://realono.nioos.com/\",\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
+		final String expected = "{\"date\":0,\"description\":\"descripción...\",\"id\":0,\"link\":\"http://realono.nioos.com/\",\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
 		//
 		final NewsJson newsJson = new NewsJson("", false);
 		final byte[] buffer = newsJson.getNextRandomNewsInJsonFormat();
+		final String actual = new String(buffer, "UTF8");
+		assertEquals("news failed", expected, actual);
+		//
+		newsJson.stop();
+		final boolean deleted = tmpFile.delete();
+		if (!deleted) {
+			throw new IOException("Cannot delete file '"
+				+ DataFileTest.NEWS_DATA_FILE_NAME + "'");
+		}
+	}
+	
+	
+	/**
+	 * Test for the getNewsbyIdInJsonFormat method.
+	 * @throws IOException on error.
+	 */
+	@Test
+	public final void testGetNewsbyIdInJsonFormat()
+			throws IOException {
+		//
+		final File tmpFile = DataFileTest.prepareTestDataFile();
+		//
+		final String expected = "{\"date\":0,\"description\":\"descripción...\",\"id\":0,\"link\":\"http://realono.nioos.com/\",\"realFake\":\"r\",\"title\":\"título\"}"; // NOPMD
+		//
+		final NewsJson newsJson = new NewsJson("", false);
+		final byte[] buffer = newsJson.getNewsbyIdInJsonFormat("0");
 		final String actual = new String(buffer, "UTF8");
 		assertEquals("news failed", expected, actual);
 		//

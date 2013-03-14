@@ -300,7 +300,18 @@ public class DataFile {
 		if (numberOfRecords > 1) {
 			nextId = random.nextInt(numberOfRecords - 1);
 		}
-		final int currentPosition = nextId * NewsRecord.TOTAL_REC_LEN;
+		return getNewsById(nextId);
+	}
+	
+	
+	/**
+	 * Get the news from the data file.
+	 * 
+	 * @param nid the news identifier.
+	 * @return the NewsRecord with the next random news.
+	 */
+	private NewsRecord getNewsById(final int nid) {
+		final int currentPosition = nid * NewsRecord.TOTAL_REC_LEN;
 		NewsRecord result = null; // NOPMD
 		try {
 			synchronized (raf) {
@@ -323,13 +334,24 @@ public class DataFile {
 				//
 				final char realOrFake = raf.readChar();
 				//
-				result = new NewsRecord(nextId, title, description, // NOPMD
+				result = new NewsRecord(nid, title, description, // NOPMD
 					realOrFake, link, new Date(0L));
 			}
 		} catch (IOException ioe) {
 			cannotReadDataFile(ioe);
 		}
 		return result;
+	}
+	
+	
+	/**
+	 * Get the news from the data file.
+	 * 
+	 * @param nid the news identifier.
+	 * @return the NewsRecord with the next random news.
+	 */
+	public final NewsRecord getNewsById(final String nid) {
+		return getNewsById(Integer.parseInt(nid));
 	}
 	
 	

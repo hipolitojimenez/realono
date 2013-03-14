@@ -68,9 +68,19 @@ public class NewsJson {
 	 */
 	public final byte[] getNextRandomNewsInJsonFormat() {
 		final String news = getNextRandomNewsInStringFormat();
+		return convertStringToUTF8ByteArray(news);
+	}
+	
+	/**
+	 * Convert the given String in the corresponding UTF8 byte array.
+	 * 
+	 * @param str the String to be converted.
+	 * @return the resulting byte array.
+	 */
+	private byte[] convertStringToUTF8ByteArray(final String str) {
 		byte[] buffer = null; // NOPMD
 		try {
-			buffer = news.getBytes("UTF8"); // NOPMD
+			buffer = str.getBytes("UTF8"); // NOPMD
 		} catch (UnsupportedEncodingException uee) {
 			LOG.fatal("UTF8 is not supported !!!", uee);
 			throw new IllegalArgumentException("UTF8 is not supported !!!",
@@ -106,6 +116,41 @@ public class NewsJson {
 	 */
 	public final void stop() {
 		dataFile.close();
+	}
+	
+	
+	/**
+	 * Get the given news from the data file in json format.
+	 * 
+	 * @param nid the news identifier.
+	 * @return the byte array that contains the json string.
+	 */
+	public final byte[] getNewsbyIdInJsonFormat(final String nid) {
+		final String news = getNewsByIdInStringFormat(nid);
+		return convertStringToUTF8ByteArray(news);
+	}
+	
+	
+	/**
+	 * Get the given news from the data file in string format.
+	 * 
+	 * @param nid the news identifier.
+	 * @return the string with the next random news.
+	 */
+	private String getNewsByIdInStringFormat(final String nid) {
+		final NewsRecord newsRecord = getNewsByIdInRecordFormat(nid);
+		return JSONObject.fromObject(newsRecord).toString();
+	}
+	
+	
+	/**
+	 * Get the next random news from the data file in record format.
+	 * 
+	 * @param nid the news identifier.
+	 * @return the NewsRecord with the next random news.
+	 */
+	private NewsRecord getNewsByIdInRecordFormat(final String nid) {
+		return dataFile.getNewsById(nid);
 	}
 	
 	

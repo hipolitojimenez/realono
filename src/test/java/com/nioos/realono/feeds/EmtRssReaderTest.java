@@ -85,7 +85,7 @@ public class EmtRssReaderTest {
 		//
 		final NewsRecord record = records.get(0);
 		final String description = record.getDescription();
-		assertEquals("invalid description", DESCRIPCION, description);
+		assertEquals("invalid description", DESCRIPCION + "...", description);
 		final String link = record.getLink();
 		assertEquals("invalid link", LINK, link);
 		final String title = record.getTitle();

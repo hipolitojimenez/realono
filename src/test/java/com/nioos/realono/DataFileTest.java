@@ -76,6 +76,33 @@ public class DataFileTest {
 	
 	
 	/**
+	 * Test getNewsById().
+	 * 
+	 * @throws IOException on error.
+	 */
+	@Test
+	public final void testGetNewsById() throws IOException {
+		//
+		final File tmpFile = prepareTestDataFile();
+		//
+		final NewsRecord expected =
+			new NewsRecord(0, TITULO, DESCRIPCION, 'r', LINK, new Date(0L));
+		//
+		final DataFile dataFile = new DataFile("", false);
+		final NewsRecord actual = dataFile.getNewsById("0");
+		//
+		assertEquals("data file failed", expected, actual);
+		//
+		dataFile.close();
+		final boolean deleted = tmpFile.delete();
+		if (!deleted) {
+			throw new IOException("Cannot delete file '" + NEWS_DATA_FILE_NAME
+				+ "'");
+		}
+	}
+	
+	
+	/**
 	 * Prepare the data file used in the test.
 	 * 
 	 * @return the file prepared.

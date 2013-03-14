@@ -42,7 +42,7 @@ public class PemtRssReaderTest {
 	/**
 	 * News Description.
 	 */
-	private static final String DESCRIPCION = "Descripción";
+	private static final String DESCRIPCION = "Descripción...";
 	
 	
 	/**

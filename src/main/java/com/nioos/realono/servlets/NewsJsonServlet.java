@@ -64,7 +64,13 @@ public class NewsJsonServlet extends HttpServlet {
 			throws ServletException, IOException {
 		final String contentType = NewsJson.CONTENT_TYPE;
 		response.setContentType(contentType);
-		final byte[] buffer = newsJson.getNextRandomNewsInJsonFormat();
+		final String nid = request.getParameter("id");
+		byte[] buffer;
+		if (nid == null) {
+			buffer = newsJson.getNextRandomNewsInJsonFormat();
+		} else {
+			buffer = newsJson.getNewsbyIdInJsonFormat(nid);
+		}
 		response.getOutputStream().write(buffer);
 	}
 	
