@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Real o Inventado</title>
+		<style type="text/css">
+			h1, h2 {
+				text-align: center;
+			}
+			.container {
+				width: 500px;
+				margin: 0 auto;
+				text-align: center;
+				position: relative;
+			}
+			.item {
+				width: 500px;
+				padding: 15px;
+				margin: 10px auto;
+				-webkit-border-radius: 25px;
+				-moz-border-radius: 25px;
+				border-radius: 25px;
+				-webkit-box-shadow: 10px 10px 10px;
+				-moz-box-shadow: 10px 10px 10px;
+				box-shadow: 10px 10px 10px;
+				display: none;
+			}
+			.redborder {
+				border: 5px groove red;
+			}
+			.blueborder {
+				border: 5px groove blue;
+			}
+		</style>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			var tContador = 4;
+			var comentarios = [
+				'Eres lo que en política llamam "un votante modelo"',
+				'La realidad es que estás por debajo de la media',
+				'Estás en la media',
+				'Estás por encima de la media',
+				'Seguro que tus amigos creen que eres un listillo'
+			];
+			//
+			$(document).ready(function() {
+				var searchStr = window.location.search.substring(1);
+				var searchArray = searchStr.split('&');
+				var idsStr = searchArray[0].substring(4);
+				var resStr = searchArray[1].substring(4);
+				var ids = idsStr.split(',');
+				var res = resStr.split(',');
+				var resultados = 0;
+				for (var i = 0; i < tContador; i++) {
+					var currentRes = res[i];
+					var currentId = ids[i];
+					if (currentRes == 'true') {
+						resultados++;
+					}
+					renderResult(i, currentId, currentRes);
+				}
+				$('#aciertos').text('Has acertado ' + resultados + ' de ' + tContador + ' noticias');
+				$('#comentario').text(comentarios[resultados]);
+			});
+			//
+			function renderResult(i, id, res) {
+				$.getJSON(
+					'news.json',
+					{id: id},
+					function (data) {
+						$item = $('#item' + i);
+						//TODO
+						if (res == 'true') {
+							$item.addClass('blueborder');
+							$item.html('<div>Correcto - La noticia <a href=""></a> es $fff</div>');
+						} else {
+							$item.addClass('redborder');
+							$item.html('<div>Error - La noticia <a href=""></a> es $fff</div>');
+						}
+						$item.fadeIn(2000);
+					}
+				);
+			}
+			//
+		</script>
+	</head>
+	<body>
+		<br/>
+		<h1>Real o Inventado</h1>
+		<h2>¿La realidad siempre supera a la ficción?</h2>
+		<div class="container">
+			<div><b><i>Resultados</i></b></div>
+			<div><i id="aciertos"></i></div>
+			<div><b id="comentario"></b></div>
+			<br/>
+			<div id="item0" class="item"></div>
+			<div id="item1" class="item"></div>
+			<div id="item2" class="item"></div>
+			<div id="item3" class="item"></div>
+		</div>
+	</body>
+</html>

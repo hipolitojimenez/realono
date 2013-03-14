@@ -133,6 +133,9 @@ public class DataFile {
 		try {
 			final long len = raf.length();
 			numberOfRecords = (int) (len / NewsRecord.TOTAL_REC_LEN);
+			if (LOG.isInfoEnabled()) {
+				LOG.info("Number Of Records : " + numberOfRecords);
+			}
 		} catch (IOException ioe) {
 			cannotReadDataFile(ioe);
 		}
@@ -156,7 +159,13 @@ public class DataFile {
 	 */
 	private void loadDates() {
 		lastEmtDate = loadDate(emtDateFile);
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Last Emt Date : " + new Date(lastEmtDate));
+		}
 		lastPemtDate = loadDate(pemtDateFile);
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Last pEmt Date : " + new Date(lastPemtDate));
+		}
 	}
 	
 	
@@ -246,11 +255,14 @@ public class DataFile {
 			final String file) {
 		try {
 			synchronized (raf) {
+				raf.seek(raf.length());
 				raf.write(NewsRecord.formatTitle(record.getTitle()));
 			  raf.write(NewsRecord.formatDescription(record.getDescription()));
 				raf.write(NewsRecord.formatLink(record.getLink()));
 				raf.writeChar(realFake);
 				raf.getFD().sync();
+				//
+				numberOfRecords++;
 			}
 			//
 			final RandomAccessFile dateFile = new RandomAccessFile(file, "rw");
@@ -260,8 +272,6 @@ public class DataFile {
 			LOG.fatal("Cannot write file !!!", ioe);
 			throw new IllegalStateException("Cannot write file !!!", ioe);
 		}
-		//
-		numberOfRecords++;
 	}
 	
 	

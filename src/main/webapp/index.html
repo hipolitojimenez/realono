@@ -80,18 +80,56 @@
 			var realFake;
 			var iContador = 0;
 			var tContador = 4;
+			var ids = [];
+			var results = [];
 			$(document).ready(function() {
+				getNewsDataFromServer();
+			});
+			//
+			function getNextNewsData() {
+				$('.tbutton').attr('disabled', 'disabled');
+				$('.fbutton').attr('disabled', 'disabled');
+				$('#item').fadeOut(2000, function() {
+					$('#ajaxloader').fadeIn(2000, function () {
+						getNewsDataFromServer();
+					});
+				});
+			}
+			//
+			function getNewsDataFromServer() {
 				$.getJSON('news.json', function (data) {
 					iContador++;
 					$('#titulo').text(data.title);
 					$('#descripcion').text(data.description);
 					$('#contador').text('Noticia ' + iContador + ' de ' + tContador);
 					realFake = data.realFake;
-					//TODO load from server
-					$('#ajaxloader').fadeOut(2000);
-					$('#item').fadeIn(2000);
+					ids.push(data.id);
+					$('#ajaxloader').fadeOut(2000, function () {
+						$('#item').fadeIn(2000, function() {
+							$('.tbutton').removeAttr('disabled');
+							$('.fbutton').removeAttr('disabled');
+						});
+					});
 				});
-			});
+			}
+			//
+			function checkNewsIs(value) {
+				if (realFake == value) {
+					results.push(true);
+				} else {
+					results.push(false);
+				}
+				if (iContador < 4) {
+					getNextNewsData();
+				} else {
+					var query = '?ids=' + ids.join(',') + '&res=' + results.join(',');
+					var loc = window.location;
+					var host = loc.host;
+					var pathname = loc.pathname.replace(/\/$/, '');
+					var url = 'http://' + host + pathname + '/realono.html' + query;
+					loc.assign(url);
+				}
+			}
 		</script>
 	</head>
 	<body>
@@ -109,9 +147,9 @@
 				<br/>
 				<div id="descripcion"></div>
 				<br/>
-				<div><button class="tbutton">Verdadera</button></div>
+				<div><button class="tbutton" disabled="disabled" onclick="checkNewsIs('r')">Verdadera</button></div>
 				<div>o</div>
-				<div><button class="fbutton">Falsa</button></div>
+				<div><button class="fbutton" disabled="disabled" onclick="checkNewsIs('f')">Falsa</button></div>
 			</div>
 		</div>
 	</body>
