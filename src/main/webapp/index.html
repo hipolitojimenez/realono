@@ -83,6 +83,7 @@
 			var ids = [];
 			var results = [];
 			$(document).ready(function() {
+				$.ajaxSetup({cache: false});
 				getNewsDataFromServer();
 			});
 			//
