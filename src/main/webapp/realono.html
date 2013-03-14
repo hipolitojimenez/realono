@@ -15,7 +15,7 @@
 			}
 			.item {
 				width: 500px;
-				padding: 15px;
+				padding: 20px;
 				margin: 10px auto;
 				-webkit-border-radius: 25px;
 				-moz-border-radius: 25px;
@@ -24,12 +24,15 @@
 				-moz-box-shadow: 10px 10px 10px;
 				box-shadow: 10px 10px 10px;
 				display: none;
+				text-align: left;
 			}
 			.redborder {
 				border: 5px groove red;
+				background: url('images/false.png') no-repeat left center;
 			}
 			.blueborder {
 				border: 5px groove blue;
+				background: url('images/true.png') no-repeat left center;
 			}
 		</style>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -68,14 +71,19 @@
 					'news.json',
 					{id: id},
 					function (data) {
+						var title = data.title;
+						var link = data.link;
+						var realOrFake = 'falsa';
+						if (data.realFake == 'r') {
+							realOrFake = 'real';
+						}
 						$item = $('#item' + i);
-						//TODO
 						if (res == 'true') {
 							$item.addClass('blueborder');
-							$item.html('<div>Correcto - La noticia <a href=""></a> es $fff</div>');
+							$item.html('<div>Correcto - La noticia <a href="' + link + '" target="_blank">' + title + '</a> es ' + realOrFake + '</div>');
 						} else {
 							$item.addClass('redborder');
-							$item.html('<div>Error - La noticia <a href=""></a> es $fff</div>');
+							$item.html('<div>Error - La noticia <a href="' + link + '" target="_blank">' + title + '</a> es ' + realOrFake + '</div>');
 						}
 						$item.fadeIn(2000);
 					}
