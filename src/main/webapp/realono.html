@@ -48,7 +48,7 @@
 			//
 			$(document).ready(function() {
 				$.ajaxSetup({cache: false});
-				var searchStr = window.location.search.substring(1);
+				var searchStr = window.location.search.substring(1).split('#')[0];
 				var searchArray = searchStr.split('&');
 				var idsStr = searchArray[0].substring(4);
 				var resStr = searchArray[1].substring(4);
@@ -107,5 +107,17 @@
 			<div id="item2" class="item"></div>
 			<div id="item3" class="item"></div>
 		</div>
+		<!-- AddThis Button BEGIN -->
+		<div class="addthis_toolbox addthis_floating_style addthis_32x32_style" style="right:50px;top:50px;">
+			<a class="addthis_button_facebook"></a>
+			<a class="addthis_button_twitter"></a>
+			<a class="addthis_button_tuenti"></a>
+			<a class="addthis_button_email"></a>
+			<a class="addthis_button_google_plusone_share"></a>
+			<a class="addthis_button_pinterest"></a>
+			<a class="addthis_button_compact"></a>
+		</div>
+		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-51445c56501b2d63"></script>
+		<!-- AddThis Button END -->
 	</body>
 </html>
