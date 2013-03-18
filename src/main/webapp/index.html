@@ -90,8 +90,8 @@
 			function getNextNewsData() {
 				$('.tbutton').attr('disabled', 'disabled');
 				$('.fbutton').attr('disabled', 'disabled');
-				$('#item').fadeOut(2000, function() {
-					$('#ajaxloader').fadeIn(2000, function () {
+				$('#item').fadeOut(1000, function() {
+					$('#ajaxloader').fadeIn(1000, function () {
 						getNewsDataFromServer();
 					});
 				});
@@ -105,8 +105,8 @@
 					$('#contador').text('Noticia ' + iContador + ' de ' + tContador);
 					realFake = data.realFake;
 					ids.push(data.id);
-					$('#ajaxloader').fadeOut(2000, function () {
-						$('#item').fadeIn(2000, function() {
+					$('#ajaxloader').fadeOut(1000, function () {
+						$('#item').fadeIn(1000, function() {
 							$('.tbutton').removeAttr('disabled');
 							$('.fbutton').removeAttr('disabled');
 						});
