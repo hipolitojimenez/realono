@@ -48,10 +48,10 @@
 			//
 			$(document).ready(function() {
 				var pathname = window.location.pathname;
-				if (pathname.length > 1) {
+				if (pathname.lastIndexOf('/') > 1) {
 					pathname = pathname.substring(0, pathname.lastIndexOf('/'));
+					$('#rootLink').attr('href', pathname);
 				}
-				$('#rootLink').attr('href', pathname);
 				//
 				$.ajaxSetup({cache: false});
 				var searchStr = window.location.search.substring(1).split('#')[0];
