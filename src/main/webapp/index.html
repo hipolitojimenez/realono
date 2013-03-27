@@ -129,6 +129,7 @@
 					var loc = window.location;
 					var host = loc.host;
 					var pathname = loc.pathname.replace(/\/$/, '');
+					pathname = loc.pathname.replace(/\/index.html$/, '');
 					var url = 'http://' + host + pathname + '/realono.html' + query;
 					loc.assign(url);
 				}
