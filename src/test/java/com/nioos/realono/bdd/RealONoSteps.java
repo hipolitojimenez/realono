@@ -19,74 +19,138 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
+/**
+ * Tests steps.
+ * 
+ * @author Hipolito Jimenez
+ */
 public class RealONoSteps {
 	
 	
+	/**
+	 * The page title.
+	 */
+	private static final String PAGE_TITLE = "Real o Inventado";
+	
+	
+	/**
+	 * AJAX wait time in seconds.
+	 */
+	private static final int WAIT_SECONDS = 5;
+	
+	
+	/**
+	 * Test base URL.
+	 */
 	private static final String BASE_URL = "http://localhost:8080/realono/";
 	
 	
+	/**
+	 * Test html page.
+	 */
 	private static final String HTML_URL = BASE_URL + "index.html";
 	
 	
-	private WebDriver chromeDriver = new ChromeDriver();
+	/**
+	 * Chrome web driver.
+	 */
+	private final transient WebDriver chromeDriver = new ChromeDriver();
 	
 	
-	private WebDriver firefoxDriver = new FirefoxDriver();
+	/**
+	 * Firefox web driver.
+	 */
+	private final transient WebDriver firefoxDriver = new FirefoxDriver();
 	
 	
-	private WebDriver internetExplorerDriver = new InternetExplorerDriver();
+	/**
+	 * Internet Explorer web driver.
+	 */
+	private final transient WebDriver internetExplorerDriver =
+		new InternetExplorerDriver();
 	
 	
+	/**
+	 * Cleanup after the tests.
+	 * Close all the browsers.
+	 */
 	@AfterStories
-	public void afterStories() {
+	public final void afterStories() {
 		chromeDriver.quit();
 		firefoxDriver.close();
 		internetExplorerDriver.quit();
 	}
 	
 	
+	/**
+	 * Step.
+	 * Given the user opens the index page.
+	 */
 	@Given("the user opens the index page")
-	public void givenTheUserOpensTheIndexPage() {
+	public final void givenTheUserOpensTheIndexPage() {
 		getHomePage(chromeDriver);
 		getHomePage(firefoxDriver);
 		getHomePage(internetExplorerDriver);
 	}
 	
 	
-	private void getHomePage(WebDriver webDriver) {
+	/**
+	 * Navigate to the home page.
+	 * @param webDriver the web driver (browser).
+	 */
+	private void getHomePage(final WebDriver webDriver) {
 		webDriver.get(HTML_URL);
 		checkTitle(webDriver);
 	}
 	
 	
-	private void checkTitle(WebDriver driver) {
-		String title = driver.getTitle();
-		String expectedTitle = "Real o Inventado";
-		Assert.assertEquals("Wrong page title", expectedTitle, title);
+	/**
+	 * Checks the page title.
+	 * @param driver the web driver (browser).
+	 */
+	private void checkTitle(final WebDriver driver) {
+		final String title = driver.getTitle();
+		Assert.assertEquals("Wrong page title", PAGE_TITLE, title);
 	}
 	
 	
+	/**
+	 * Step.
+	 * When the user waits for the next news to be loaded.
+	 */
 	@When("the user waits for the next news to be loaded")
-	public void whenTheUserWaitsForTheNextNewsToBeLoaded() {
+	public final void whenTheUserWaitsForTheNextNewsToBeLoaded() {
 		waitForNextNews(chromeDriver);
 		waitForNextNews(firefoxDriver);
 		waitForNextNews(internetExplorerDriver);
 	}
 	
 	
-	private void waitForNextNews(WebDriver webDriver) {
-		WebDriverWait wait = new WebDriverWait(webDriver, 5);
-		wait.until(ExpectedConditions.elementToBeClickable(By.className("tbutton")));
+	/**
+	 * Wait for next news to be loaded (using AJAX).
+	 * @param webDriver the web driver (browser).
+	 */
+	private void waitForNextNews(final WebDriver webDriver) {
+		final WebDriverWait wait = new WebDriverWait(webDriver, WAIT_SECONDS);
+		wait.until(
+			ExpectedConditions.elementToBeClickable(By.className("tbutton"))
+		);
 	}
 	
 	
+	/**
+	 * Step.
+	 * When the user clicks the $button button.
+	 * @param button the button clicked.
+	 */
 	@When("the user clicks the $button button")
-	public void whenTheUserClicksTheButton(@Named("button") String button) {
-		String buttonClass = null;
-		if (button.equals("verdadero")) {
-			buttonClass = "tbutton";
+	public final void whenTheUserClicksTheButton(
+			@Named("button") final String button) {
+		String buttonClass = null; // NOPMD
+		if ("verdadero".equals(button)) {
+			buttonClass = "tbutton"; // NOPMD
 		}
-		if (button.equals("falso")) {
+		if ("falso".equals(button)) {
 			buttonClass = "fbutton";
 		}
 		clickTheButton(buttonClass, chromeDriver);
@@ -95,16 +159,27 @@ public class RealONoSteps {
 	}
 	
 	
-	private void clickTheButton(String buttonClass, WebDriver webDriver) {
-		WebElement button = webDriver.findElement(By.className(buttonClass));
+	/**
+	 * Test if the button can be clicked.
+	 * @param buttonClass the button css class.
+	 * @param webDriver the browser.
+	 */
+	private void clickTheButton(final String buttonClass,
+			final WebDriver webDriver) {
+		final WebElement button =
+			webDriver.findElement(By.className(buttonClass));
 		Assert.assertTrue("The button is not visible", button.isDisplayed());
 		Assert.assertTrue("The button is not enabled", button.isEnabled());
 		button.click();
 	}
 	
 	
+	/**
+	 * Step.
+	 * Then the user view the results page realono.
+	 */
 	@Then("the user view the results page realono")
-	public void thenTheUserViewTheResultsPageRealono() {
+	public final void thenTheUserViewTheResultsPageRealono() {
 		checkTitle(chromeDriver);
 		checkTitle(firefoxDriver);
 		checkTitle(internetExplorerDriver);

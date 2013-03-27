@@ -18,30 +18,51 @@ import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 
 
+/**
+ * Behavior tests.
+ * 
+ * @author Hipolito Jimenez.
+ */
 @RunWith(JUnitReportingRunner.class)
-public class RealONoBehaviorTest extends JUnitStories {
+public class RealONoBehaviorTest extends JUnitStories { // NOPMD
 	
 	
-	private List<String> storyPaths = new ArrayList<String>();
+	/**
+	 * Story paths.
+	 */
+	private final transient List<String> storyPathList =
+		new ArrayList<String>();
 	
 	
-	private List<Object> stepsInstances = new ArrayList<Object>();
+	/**
+	 * Steps for the tests.
+	 */
+	private final transient List<Object> stepsInstances =
+		new ArrayList<Object>();
 	
 	
+	/**
+	 * Constructor.
+	 */
 	public RealONoBehaviorTest() {
-		storyPaths.add("com/nioos/realono/bdd/real_o_no.story");
+		super();
+		storyPathList.add("com/nioos/realono/bdd/real_o_no.story");
 		stepsInstances.add(new RealONoSteps());
 		//
-		Configuration configuration = getConf();
-		InjectableStepsFactory stepsFactory =
+		final Configuration configuration = getConf();
+		final InjectableStepsFactory stepsFactory =
 			new InstanceStepsFactory(configuration, stepsInstances);
 		useStepsFactory(stepsFactory);
 	}
 	
 	
+	/**
+	 * Gets the configuration for the tests.
+	 * @return the configuration for the tests.
+	 */
 	private Configuration getConf() {
-		Configuration conf = configuration();
-		StoryReporterBuilder storyReporterBuilder =
+		final Configuration conf = configuration();
+		final StoryReporterBuilder storyReporterBuilder =
 			conf.storyReporterBuilder();
 		storyReporterBuilder.withFormats(Format.CONSOLE, Format.HTML,
 			Format.TXT);
@@ -52,8 +73,8 @@ public class RealONoBehaviorTest extends JUnitStories {
 	
 	
 	@Override
-	protected List<String> storyPaths() {
-		return storyPaths;
+	protected final List<String> storyPaths() {
+		return storyPathList;
 	}
 	
 	
