@@ -129,7 +129,7 @@
 				} else {
 					var query = '?ids=' + ids.join(',') + '&res=' + results.join(',');
 					var loc = window.location;
-					var host = loc.host;
+					var host = loc.host.replace(/\/$/, '');
 					var pathname = loc.pathname.replace(/\/$/, '');
 					pathname = pathname.replace(/\/index.html$/, '');
 					var url = 'http://' + host + pathname + '/realono.html' + query;
