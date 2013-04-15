@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.nioos</groupId>
   <artifactId>realono</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>war</packaging>
   <properties>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -149,4 +149,8 @@
   		</plugin>
   	</plugins>
   </reporting>
+  <url>https://github.com/hipolitojimenez/realono</url>
+  <organization>
+  	<url>http://realono.nioos.com</url>
+  </organization>
 </project>
