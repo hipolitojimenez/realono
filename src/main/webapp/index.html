@@ -82,7 +82,7 @@
 				box-shadow: inset 2px 2px 2px gold, inset -2px -2px 2px gold, 3px 3px 3px red;
 			}
 		</style>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script type="text/javascript">
 			var realFake;
 			var iContador = 0;
@@ -135,7 +135,7 @@
 					var host = loc.host.replace(/\/$/, '');
 					var pathname = loc.pathname.replace(/\/$/, '');
 					pathname = pathname.replace(/\/index.html$/, '');
-					var url = 'http://' + host + pathname + '/realono.html' + query;
+					var url = loc.protocol +  '//' + host + pathname + '/realono.html' + query;
 					loc.assign(url);
 				}
 			}
